@@ -28,4 +28,8 @@
         <ShellContent ContentTemplate="{DataTemplate views:DailyConditionResultView}" Route="DailyConditionResultView" />
     </FlyoutItem>
 
+    <FlyoutItem Title="設定">
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />
+    </FlyoutItem>
+
 </Shell>

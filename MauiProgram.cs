@@ -29,6 +29,9 @@ public static class MauiProgram
 
         builder.Services.AddTransient<DailyConditionResultView>();
         builder.Services.AddTransient<DailyConditionResultViewModel>();
+
+        builder.Services.AddTransient<SettingsView>();
+        builder.Services.AddTransient<SettingsViewModel>();
         return builder.Build();
     }
 }
