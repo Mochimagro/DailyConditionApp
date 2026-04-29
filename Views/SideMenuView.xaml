@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="DailyConditionApp.Views.SideMenuView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentView.Resources>
+        <!--  カラーをリソース化して後で一括変更しやすくしています  -->
+        <Color x:Key="SideMenuBackground">#263238</Color>
+        <Color x:Key="SideMenuItemBackground">#37474F</Color>
+        <Color x:Key="SideMenuItemSelected">#0288D1</Color>
+        <Color x:Key="SideMenuText">#FFFFFF</Color>
+    </ContentView.Resources>
+
+    <!--  背景をダークにして文字を白に  -->
+    <VerticalStackLayout
+        Padding="10"
+        BackgroundColor="{StaticResource SideMenuBackground}"
+        Spacing="8">
+        <Label
+            FontAttributes="Bold"
+            Text="メニュー"
+            TextColor="{StaticResource SideMenuText}" />
+
+        <CollectionView
+            ItemsSource="{Binding MenuItems}"
+            SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"
+            SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="0,4"
+                        Padding="8"
+                        BackgroundColor="{StaticResource SideMenuItemBackground}"
+                        CornerRadius="6"
+                        HasShadow="False">
+                        <Label
+                            x:Name="ItemLabel"
+                            Text="{Binding .}"
+                            TextColor="{StaticResource SideMenuText}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{StaticResource SideMenuItemBackground}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{StaticResource SideMenuItemSelected}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentView>
