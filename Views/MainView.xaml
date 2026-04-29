@@ -3,53 +3,14 @@
     x:Class="DailyConditionApp.Views.MainView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:DailyConditionApp.ViewModels"
     xmlns:views="clr-namespace:DailyConditionApp.Views"
-    Title="MainView">
-    <Grid RowDefinitions="Auto,*">
-        <!-- ヘッダー: 左上にメニューボタン -->
-        <Grid Row="0" Padding="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button
-                Grid.Column="0"
-                Text="☰"
-                FontSize="18"
-                Command="{Binding ToggleMenuCommand}"
-                VerticalOptions="Center"
-                HorizontalOptions="Start" />
-
-            <Label
-                Grid.Column="1"
-                Text="DailyConditionApp"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                FontAttributes="Bold" />
-        </Grid>
-
-        <!-- 本体: 左にサイドメニュー、右に詳細 -->
-        <Grid Row="1" ColumnSpacing="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!-- サイドメニュー: SideMenuView を使用し、表示制御 -->
-            <views:SideMenuView
-                Grid.Column="0"
-                IsVisible="{Binding IsMenuVisible}"
-                BackgroundColor="#F2F2F2" />
-
-            <!-- 詳細表示 -->
-            <ContentView x:Name="DetailContent" Grid.Column="1" Padding="20">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="{Binding GreetingMessage}" FontSize="18" />
-                    <Button Command="{Binding ShowHelloMessageCommand}" Text="Tap me" />
-                </VerticalStackLayout>
-            </ContentView>
-        </Grid>
-    </Grid>
+    xmlns:vm="clr-namespace:DailyConditionApp.ViewModels"
+    Title="トップ">
+    <VerticalStackLayout Padding="30" Spacing="20">
+        <Label
+            FontSize="24"
+            HorizontalOptions="Center"
+            Text="{Binding Title}" />
+        <Button Command="{Binding GoToDailyInputCommand}" Text="コードからページAへ遷移する" />
+    </VerticalStackLayout>
 </ContentPage>

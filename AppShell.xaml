@@ -6,10 +6,26 @@
     xmlns:local="clr-namespace:DailyConditionApp"
     xmlns:views="clr-namespace:DailyConditionApp.Views"
     Title="DailyConditionApp">
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource Primary}" HeightRequest="150">
+            <Label
+                HorizontalOptions="Center"
+                Text="マイメニュー"
+                TextColor="White"
+                VerticalOptions="Center" />
+        </Grid>
+    </Shell.FlyoutHeader>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:MainView}"
-        Route="MainView" />
+    <FlyoutItem Title="トップページ">
+        <ShellContent ContentTemplate="{DataTemplate views:MainView}" Route="MainView" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="今日のコンディション入力">
+        <ShellContent ContentTemplate="{DataTemplate views:DailyInputView}" Route="DailyInputView" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="結果表示">
+        <ShellContent ContentTemplate="{DataTemplate views:DailyConditionResultView}" Route="DailyConditionResultView" />
+    </FlyoutItem>
 
 </Shell>

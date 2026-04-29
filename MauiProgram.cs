@@ -24,6 +24,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainView>();
         builder.Services.AddSingleton<MainViewModel>();
 
+        builder.Services.AddTransient<DailyInputView>();
+        builder.Services.AddTransient<DailyInputViewModel>();
+
+        builder.Services.AddTransient<DailyConditionResultView>();
+        builder.Services.AddTransient<DailyConditionResultViewModel>();
         return builder.Build();
     }
 }

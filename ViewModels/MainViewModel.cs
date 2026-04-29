@@ -7,33 +7,15 @@ namespace DailyConditionApp.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _greetingMessage = "Tap Button";
+        private string _title = "トップページです";
 
-        // サイドメニュー項目
-        public ObservableCollection<string> MenuItems { get; } = new ObservableCollection<string>
-        {
-            "サンプルA",            // DailyConditionResult に対応
-            "サンプルB",            // DailyInput に対応
-            "DailyConditionResult",
-            "DailyInputView"
-        };
-
-        [ObservableProperty]
-        private string _selectedMenu;
-
-        [ObservableProperty]
-        private bool _isMenuVisible;
-
+        // サイドメニューからではなく、画面内のボタンから直接PageAに遷移したい場合の例
         [RelayCommand]
-        private void ToggleMenu()
+        private async Task GoToDailyInput()
         {
-            IsMenuVisible = !IsMenuVisible;
-        }
-
-        [RelayCommand]
-        private void ShowHelloMessage()
-        {
-            GreetingMessage = "Hello,world";
+            // AppShellで定義した Route="DailyInputView" の名前を使って遷移します
+            await Shell.Current.GoToAsync("DailyInputView");
         }
     }
+
 }
