@@ -14,7 +14,7 @@ namespace DailyConditionApp.ViewModels
         private async Task GoToDailyInput()
         {
             // AppShellで定義した Route="DailyInputView" の名前を使って遷移します
-            await Shell.Current.GoToAsync("DailyInputView");
+            await Shell.Current.GoToAsync("///DailyInputView");
         }
     }
 

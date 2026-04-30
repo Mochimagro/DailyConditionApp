@@ -11,6 +11,6 @@
             FontSize="24"
             HorizontalOptions="Center"
             Text="{Binding Title}" />
-        <Button Command="{Binding GoToDailyInputCommand}" Text="コードからページAへ遷移する" />
+        <Button Command="{Binding GoToDailyInputCommand}" Text="今日のコンディションを入力する" />
     </VerticalStackLayout>
 </ContentPage>

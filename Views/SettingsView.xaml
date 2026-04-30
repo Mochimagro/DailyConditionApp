@@ -9,9 +9,7 @@
             HorizontalOptions="Start"
             Text="設定" />
         <Label Text="APIキー" />
-        <Entry
-            Placeholder="APIキーを入力"
-            Text="{Binding ApiKey, Mode=TwoWay}" />
+        <Entry Placeholder="APIキーを入力" Text="{Binding ApiKey, Mode=TwoWay}" />
         <Label
             FontSize="12"
             Text="※このAPIキーはデバイスに保存されます。"
