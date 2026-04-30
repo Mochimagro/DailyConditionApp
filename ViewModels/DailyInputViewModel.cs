@@ -11,7 +11,7 @@ namespace DailyConditionApp.ViewModels
     {
         // 文字列で受け取り、必要時に double.Parse 等で変換する構成にしています。
         [ObservableProperty]
-        private string sleepHours;
+        private TimeSpan sleepTime;
 
         [ObservableProperty]
         private string sleepEfficiency;

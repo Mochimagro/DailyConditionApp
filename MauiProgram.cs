@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using DailyConditionApp;
+using DailyConditionApp.Services;
 using DailyConditionApp.ViewModels;
 using DailyConditionApp.Views;
 
@@ -32,6 +33,10 @@ public static class MauiProgram
 
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
+
+        builder.Services.AddSingleton<ISettingService,SettingsService>();
+
+        builder.Services.AddSingleton<IDialogService, DialogService>();
         return builder.Build();
     }
 }

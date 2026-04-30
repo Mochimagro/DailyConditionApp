@@ -14,5 +14,14 @@
             FontSize="12"
             Text="※このAPIキーはデバイスに保存されます。"
             TextColor="Gray" />
+        <!--  保存ボタン  -->
+        <HorizontalStackLayout HorizontalOptions="End">
+            <Button
+                AutomationId="SaveButton"
+                Command="{Binding SaveSettingsCommand}"
+                HorizontalOptions="End"
+                Text="保存" />
+        </HorizontalStackLayout>
+
     </VerticalStackLayout>
 </ContentPage>

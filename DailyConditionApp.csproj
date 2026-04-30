@@ -68,10 +68,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\DailyConditionResultView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
