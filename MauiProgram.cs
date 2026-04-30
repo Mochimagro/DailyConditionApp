@@ -43,6 +43,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IDialogService, DialogService>();
 
+        builder.Services.AddHttpClient<INotionService, NotionService>();
+
         builder.Services.AddHttpClient<IWeatherService, WeatherService>();
         return builder.Build();
     }

@@ -10,11 +10,14 @@
             FontAttributes="Bold"
             HorizontalOptions="Start"
             Text="設定" />
-        <Label Text="NotionAPIキー" />
-        <Entry Placeholder="NotionAPIキーを入力" Text="{Binding ApiKey, Mode=TwoWay}" />
+        <Label Text="NotionToken" />
+        <Entry Placeholder="NotionTokenを入力" Text="{Binding NotionToken, Mode=TwoWay}" />
+
+        <Label Text="DatabaseID" />
+        <Entry Placeholder="DatabaseIDを入力" Text="{Binding DatabaseId, Mode=TwoWay}" />
         <Label
             FontSize="12"
-            Text="※このNotionAPIキーはデバイスに保存されます。"
+            Text="※このNotion情報デバイスに保存されます。"
             TextColor="Gray" />
 
         <!--  Weather API 設定  -->

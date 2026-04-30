@@ -15,6 +15,7 @@ namespace DailyConditionApp.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly IWeatherService _weatherService;
         private readonly IDialogService _dialogService;
+        private readonly INotionService _notionService;
 
         // 文字列で受け取り、必要時に double.Parse 等で変換する構成にしています。
         [ObservableProperty]
@@ -35,11 +36,13 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty]
         private string _windSpeed;
 
-        public DailyInputViewModel(ISettingsService settingsService, IWeatherService weatherService,IDialogService dialogService)
+
+        public DailyInputViewModel(ISettingsService settingsService, IWeatherService weatherService,IDialogService dialogService,INotionService notionService)
         {
             _settingsService = settingsService;
             _weatherService = weatherService;
             _dialogService = dialogService;
+            _notionService = notionService;
 
             Date = DateTime.Now.ToString("yyyy-MM-dd");
         }
@@ -92,17 +95,55 @@ namespace DailyConditionApp.ViewModels
         [RelayCommand]
         private async Task WriteToNotionAsync()
         {
-            IsBusy = true;
-            if(string.IsNullOrEmpty(SleepTime.ToString()) || string.IsNullOrEmpty(SleepEfficiency) || string.IsNullOrEmpty(Weather) || string.IsNullOrEmpty(Pressure) || string.IsNullOrEmpty(WindSpeed))
+            if (IsBusy) return;
+
+            try
             {
-                await _dialogService.ShowToastAsync("全ての項目を入力してください。");
-                
-                IsBusy = false;
-                return;
+                IsBusy = true; // ぐるぐる表示オン
+
+                // 1. 設定からトークンとデータベースIDを読み込む
+                // （※ SettingsService に DatabaseId の保存・読み込みを追加しておく必要があります）
+                var notionSettings = await _settingsService.LoadNotionKeyAsync();
+                string notionToken = notionSettings.token;
+                string databaseId = notionSettings.databaseId;
+
+                if (string.IsNullOrEmpty(notionToken) || string.IsNullOrEmpty(databaseId))
+                {
+                    // エラー通知（APIキー未設定）
+                    await _dialogService.ShowToastAsync("Notion APIキーやデータベースIDが設定されていません。設定画面から見直してください。");
+                    return;
+                }
+
+                // 2. 文字列の入力値を数値に変換 (バリデーションを兼ねる)
+                _ = double.TryParse(Pressure, out double pressureDiff);
+                _ = double.TryParse(WindSpeed, out double windSpeed);
+
+                // 3. Notionに送るデータを用意
+                var logData = new DailyLogData(
+                    Date: DateTime.Now.ToString("yyyy-MM-dd"), // 日本時間で取得する場合は調整が必要
+                    WeatherLabel: Weather,
+                    PressureDiff: pressureDiff,
+                    WindSpeed: windSpeed
+                // RelatedPageId: "取得したIDがあればここに入れる"
+                );
+
+                // 4. NotionServiceを呼び出して送信
+                bool isSuccess = await _notionService.AddDailyLogAsync(notionToken, databaseId, logData);
+
+                if (isSuccess)
+                {
+                    await _dialogService.ShowToastAsync("Notionへの保存に成功しました");
+                }
+                else
+                {
+                    await _dialogService.ShowToastAsync("Notionへの保存に失敗しました。APIキーやデータベースIDを確認してください。");
+                }
+            }
+            finally
+            {
+                IsBusy = false; // ぐるぐる表示オフ
             }
 
-            await _dialogService.ShowToastAsync("Notionに書き込む予定です。");
-            IsBusy = false;
         }
     }
 }

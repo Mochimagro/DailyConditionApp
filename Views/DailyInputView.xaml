@@ -54,13 +54,13 @@
                     Placeholder="例: 3.2"
                     Text="{Binding WindSpeed, Mode=TwoWay}" />
 
-                <!--  保存ボタン  -->
+                <!--  送信ボタン  -->
                 <HorizontalStackLayout HorizontalOptions="End">
                     <Button
                         AutomationId="WriteToNotionButton"
                         Command="{Binding WriteToNotionCommand}"
                         HorizontalOptions="End"
-                        Text="入力完了" />
+                        Text="送信" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 

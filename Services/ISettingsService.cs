@@ -8,9 +8,8 @@ namespace DailyConditionApp.Services
 {
     public interface ISettingsService
     {
-        Task SaveNotionApiKeyAsync(string apiKey);
-
-        Task<string> LoadNotionApiKeyAsync();
+        Task SaveNotionSettingsAsync(string token, string databeseID);
+        Task<(string token, string databaseId)> LoadNotionKeyAsync();
 
         Task SaveWeatherSettingsAsync(string apiKey, string lat, string lon);
         Task<(string ApiKey, string Lat, string Lon)> LoadWeatherSettingsAsync();

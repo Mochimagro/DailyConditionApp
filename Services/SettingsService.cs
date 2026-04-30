@@ -5,40 +5,39 @@ namespace DailyConditionApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        private const string SecureKey_NotionApi = "NotionApiKey";
+        private const string SecureKey_NotionToken = "NotionApiToken";
+        private const string SecureKey_DatabaseId = "NotionDatabaseId";
         private const string SecureKey_WeatherApi = "WeatherApiKey";
         private const string SecureKey_Lat = "Latitude";
         private const string SecureKey_Lon = "Longitude";
 
         // APIキーを暗号化して保存するメソッド
-        public async Task SaveNotionApiKeyAsync(string apiKey)
+        public async Task SaveNotionSettingsAsync(string token,string databeseID)
         {
-            // 入力が空の場合は、ストレージから削除する（リセット機能）
-            if (string.IsNullOrWhiteSpace(apiKey))
-            {
-                SecureStorage.Default.Remove(SecureKey_NotionApi);
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(token)) SecureStorage.Default.Remove(SecureKey_DatabaseId);
+            else await SecureStorage.Default.SetAsync(SecureKey_DatabaseId, databeseID);
 
-            // SecureStorageを使ってOSの安全な領域に保存
-            await SecureStorage.Default.SetAsync(SecureKey_NotionApi, apiKey);
+            if (string.IsNullOrWhiteSpace(token)) SecureStorage.Default.Remove(SecureKey_NotionToken);
+            else await SecureStorage.Default.SetAsync(SecureKey_NotionToken, token);
         }
 
         // 保存されたAPIキーを復号してロードするメソッド
-        public async Task<string> LoadNotionApiKeyAsync()
+        public async Task<(string token, string databaseId)> LoadNotionKeyAsync()
         {
             try
             {
                 // SecureStorageから読み込み
-                string? apiKey = await SecureStorage.Default.GetAsync(SecureKey_NotionApi);
+                string? token = await SecureStorage.Default.GetAsync(SecureKey_NotionToken);
+
+                string? databaseId = await SecureStorage.Default.GetAsync(SecureKey_DatabaseId);
 
                 // nullの場合は空文字を返す
-                return apiKey ?? string.Empty;
+                return (token ?? string.Empty, databaseId ?? string.Empty);
             }
             catch (Exception)
             {
                 // ユーザーが端末のセキュリティ設定を変更した際などに発生する例外のフェイルセーフ
-                return string.Empty;
+                return (string.Empty, string.Empty);
             }
         }
         // --- WeatherAPI用 (新規追加) ---
