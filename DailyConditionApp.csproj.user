@@ -5,6 +5,7 @@
     <ActiveDebugFramework>net9.0-android</ActiveDebugFramework>
     <ActiveDebugProfile>Google Pixel 8a (Android 16.0 - API 36)</ActiveDebugProfile>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
+    <DefaultDevice>pixel_7_-_api_35</DefaultDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

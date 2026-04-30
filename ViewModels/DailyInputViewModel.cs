@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DailyConditionApp.ViewModels
 {
-    public partial class DailyInputViewModel : ObservableObject
+    public partial class DailyInputViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
         private readonly IWeatherService _weatherService;
@@ -18,26 +18,32 @@ namespace DailyConditionApp.ViewModels
 
         // 文字列で受け取り、必要時に double.Parse 等で変換する構成にしています。
         [ObservableProperty]
-        private TimeSpan sleepTime;
+        private string _date;
+        
+        [ObservableProperty]
+        private TimeSpan _sleepTime;
 
         [ObservableProperty]
-        private string sleepEfficiency;
+        private string _sleepEfficiency;
 
         [ObservableProperty]
-        private string weather;
+        private string _weather;
 
         [ObservableProperty]
-        private string pressure;
+        private string _pressure;
 
         [ObservableProperty]
-        private string windSpeed;
+        private string _windSpeed;
 
         public DailyInputViewModel(ISettingsService settingsService, IWeatherService weatherService,IDialogService dialogService)
         {
             _settingsService = settingsService;
             _weatherService = weatherService;
             _dialogService = dialogService;
+
+            Date = DateTime.Now.ToString("yyyy-MM-dd");
         }
+
         // Picker の選択肢
         public IReadOnlyList<string> WeatherOptions { get; } = new[]
         {
@@ -51,6 +57,7 @@ namespace DailyConditionApp.ViewModels
         [RelayCommand]
         private async Task FetchWeatherAsync()
         {
+            IsBusy = true;
             var settings = await _settingsService.LoadWeatherSettingsAsync();
 
             if (string.IsNullOrEmpty(settings.ApiKey) || string.IsNullOrEmpty(settings.Lat) || string.IsNullOrEmpty(settings.Lon))
@@ -58,6 +65,7 @@ namespace DailyConditionApp.ViewModels
                 // 設定が足りない場合のエラーハンドリング（Toast等で警告を出すと良いです）
                 await _dialogService.ShowToastAsync("APIの入力が不完全です。設定画面からWeatherAPIを見直して下さい");
 
+                IsBusy = false;
                 return;
             }
 
@@ -76,6 +84,25 @@ namespace DailyConditionApp.ViewModels
             {
                 await _dialogService.ShowToastAsync("天気情報の取得に失敗しました。APIキーや位置情報を確認してください。");
             }
+
+            IsBusy = false;
+
+        }
+
+        [RelayCommand]
+        private async Task WriteToNotionAsync()
+        {
+            IsBusy = true;
+            if(string.IsNullOrEmpty(SleepTime.ToString()) || string.IsNullOrEmpty(SleepEfficiency) || string.IsNullOrEmpty(Weather) || string.IsNullOrEmpty(Pressure) || string.IsNullOrEmpty(WindSpeed))
+            {
+                await _dialogService.ShowToastAsync("全ての項目を入力してください。");
+                
+                IsBusy = false;
+                return;
+            }
+
+            await _dialogService.ShowToastAsync("Notionに書き込む予定です。");
+            IsBusy = false;
         }
     }
 }

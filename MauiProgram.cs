@@ -3,6 +3,7 @@ using DailyConditionApp;
 using DailyConditionApp.Services;
 using DailyConditionApp.ViewModels;
 using DailyConditionApp.Views;
+using DailyConditionApp.Views.Controls;
 
 public static class MauiProgram
 {
@@ -35,6 +36,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
+
+        builder.Services.AddTransient<LoadingView>();
 
         builder.Services.AddSingleton<ISettingsService,SettingsService>();
 

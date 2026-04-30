@@ -2,46 +2,69 @@
 <ContentPage
     x:Class="DailyConditionApp.Views.DailyInputView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:DailyConditionApp.Views.Controls"
+    Title="今日のコンディション入力">
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="睡眠時間（HH:mm）" />
-            <Entry
-                Keyboard="Time"
-                Placeholder="例: 07:30"
-                Text="{Binding SleepTime, Mode=TwoWay}" />
+        <Grid>
+            <VerticalStackLayout Padding="16" Spacing="12">
+
+                <Label Text="日付" />
+                <Entry
+                    IsReadOnly="True"
+                    Keyboard="Date"
+                    Text="{Binding Date, Mode=TwoWay}" />
 
 
-            <Label Text="睡眠効率（％）" />
-            <Entry
-                Keyboard="Numeric"
-                Placeholder="例: 85"
-                Text="{Binding SleepEfficiency, Mode=TwoWay}" />
+                <Label Text="睡眠時間（HH:mm）" />
+                <Entry
+                    Keyboard="Time"
+                    Placeholder="例: 07:30"
+                    Text="{Binding SleepTime, Mode=TwoWay}" />
 
-            <Button
-                Margin="0,10"
-                BackgroundColor="LightBlue"
-                Command="{Binding FetchWeatherCommand}"
-                Text="現在の天気を自動取得"
-                TextColor="Black" />
 
-            <Label Text="天気" />
-            <Picker
-                Title="選択してください"
-                ItemsSource="{Binding WeatherOptions}"
-                SelectedItem="{Binding Weather, Mode=TwoWay}" />
+                <Label Text="睡眠効率（％）" />
+                <Entry
+                    Keyboard="Numeric"
+                    Placeholder="例: 85"
+                    Text="{Binding SleepEfficiency, Mode=TwoWay}" />
 
-            <Label Text="気圧（hPa）" />
-            <Entry
-                Keyboard="Numeric"
-                Placeholder="例: 1013.25"
-                Text="{Binding Pressure, Mode=TwoWay}" />
+                <Button
+                    Margin="0,10"
+                    BackgroundColor="LightBlue"
+                    Command="{Binding FetchWeatherCommand}"
+                    Text="現在の天気を自動取得"
+                    TextColor="Black" />
 
-            <Label Text="風速（m/s）" />
-            <Entry
-                Keyboard="Numeric"
-                Placeholder="例: 3.2"
-                Text="{Binding WindSpeed, Mode=TwoWay}" />
-        </VerticalStackLayout>
+                <Label Text="天気" />
+                <Picker
+                    Title="選択してください"
+                    ItemsSource="{Binding WeatherOptions}"
+                    SelectedItem="{Binding Weather, Mode=TwoWay}" />
+
+                <Label Text="気圧（hPa）" />
+                <Entry
+                    Keyboard="Numeric"
+                    Placeholder="例: 1013.25"
+                    Text="{Binding Pressure, Mode=TwoWay}" />
+
+                <Label Text="風速（m/s）" />
+                <Entry
+                    Keyboard="Numeric"
+                    Placeholder="例: 3.2"
+                    Text="{Binding WindSpeed, Mode=TwoWay}" />
+
+                <!--  保存ボタン  -->
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Button
+                        AutomationId="WriteToNotionButton"
+                        Command="{Binding WriteToNotionCommand}"
+                        HorizontalOptions="End"
+                        Text="入力完了" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <controls:LoadingView />
+        </Grid>
     </ScrollView>
 </ContentPage>
