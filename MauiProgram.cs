@@ -20,6 +20,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        builder.Services.AddHttpClient();
+
         // Continue initializing your .NET MAUI App here
 
         builder.Services.AddSingleton<MainView>();
@@ -34,9 +36,11 @@ public static class MauiProgram
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
 
-        builder.Services.AddSingleton<ISettingService,SettingsService>();
+        builder.Services.AddSingleton<ISettingsService,SettingsService>();
 
         builder.Services.AddSingleton<IDialogService, DialogService>();
+
+        builder.Services.AddHttpClient<IWeatherService, WeatherService>();
         return builder.Build();
     }
 }

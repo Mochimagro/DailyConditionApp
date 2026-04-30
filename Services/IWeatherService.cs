@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DailyConditionApp.Services
 {
-    public interface ISettingService
+    public interface IWeatherService
     {
-        Task SaveApiKeyAsync(string apiKey);
-
-        Task<string> LoadApiKeyAsync();
+        Task<WeatherCondition?> GetWeatherAsync(string apiKey, string lat, string lon);
     }
 }

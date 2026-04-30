@@ -11,34 +11,39 @@ namespace DailyConditionApp.ViewModels
 {
     public partial class SettingsViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string _apiKey;
+        [ObservableProperty] private string _notionApiKey = string.Empty;
+        [ObservableProperty] private string _weatherApiKey = string.Empty;
+        [ObservableProperty] private string _latitude = string.Empty;
+        [ObservableProperty] private string _longitude = string.Empty;
 
-        private readonly ISettingService _settingsService;
+        private readonly ISettingsService _settingsService;
         private readonly IDialogService _dialogService;
 
-        public SettingsViewModel(ISettingService settingsService, IDialogService dialogService)
+        public SettingsViewModel(ISettingsService settingsService, IDialogService dialogService)
         {
             _settingsService = settingsService;
             _dialogService = dialogService;
-            LoadData(); // 画面が開いた時にロードする
+            LoadSettingsAsync();
         }
 
-        private async void LoadData()
+        private async void LoadSettingsAsync()
         {
-            var loadString = await _settingsService.LoadApiKeyAsync();
+            NotionApiKey = await _settingsService.LoadNotionApiKeyAsync();
 
-            ApiKey = string.IsNullOrEmpty(loadString) ? "" : loadString; 
+            var weatherSettings = await _settingsService.LoadWeatherSettingsAsync();
+            WeatherApiKey = weatherSettings.ApiKey;
+            Latitude = weatherSettings.Lat;
+            Longitude = weatherSettings.Lon;
         }
 
         [RelayCommand]
-        private async Task SaveSettings()
+        private async Task SaveSettingsAsync()
         {
-            // 入力された文字をJSONに保存
-            await _settingsService.SaveApiKeyAsync(ApiKey);
-            // 必要に応じて「保存しました」ポップアップなどを出す
-
-                await _dialogService.ShowToastAsync("保存しました");
+            await _settingsService.SaveNotionApiKeyAsync(NotionApiKey);
+            await _settingsService.SaveWeatherSettingsAsync(WeatherApiKey, Latitude, Longitude);
+            // ここで Toast 等を出して保存完了を通知すると親切です
+        
+        await _dialogService.ShowToastAsync("保存しました");
         }
     }
 }

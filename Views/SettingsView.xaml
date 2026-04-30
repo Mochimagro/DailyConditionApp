@@ -4,16 +4,37 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <VerticalStackLayout Padding="12" Spacing="8">
+
+        <!--  Norion API 設定  -->
         <Label
             FontAttributes="Bold"
             HorizontalOptions="Start"
             Text="設定" />
-        <Label Text="APIキー" />
-        <Entry Placeholder="APIキーを入力" Text="{Binding ApiKey, Mode=TwoWay}" />
+        <Label Text="NotionAPIキー" />
+        <Entry Placeholder="NotionAPIキーを入力" Text="{Binding ApiKey, Mode=TwoWay}" />
         <Label
             FontSize="12"
-            Text="※このAPIキーはデバイスに保存されます。"
+            Text="※このNotionAPIキーはデバイスに保存されます。"
             TextColor="Gray" />
+
+        <!--  Weather API 設定  -->
+        <Label
+            Margin="0,20,0,0"
+            FontAttributes="Bold"
+            FontSize="18"
+            Text="Weather API 設定" />
+
+        <!--  登録地域情報  -->
+        <Entry Placeholder="Weather API Key" Text="{Binding WeatherApiKey}" />
+        <Entry
+            Keyboard="Numeric"
+            Placeholder="緯度 (Latitude)"
+            Text="{Binding Latitude}" />
+        <Entry
+            Keyboard="Numeric"
+            Placeholder="経度 (Longitude)"
+            Text="{Binding Longitude}" />
+
         <!--  保存ボタン  -->
         <HorizontalStackLayout HorizontalOptions="End">
             <Button

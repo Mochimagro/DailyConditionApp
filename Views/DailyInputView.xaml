@@ -18,6 +18,13 @@
                 Placeholder="例: 85"
                 Text="{Binding SleepEfficiency, Mode=TwoWay}" />
 
+            <Button
+                Margin="0,10"
+                BackgroundColor="LightBlue"
+                Command="{Binding FetchWeatherCommand}"
+                Text="現在の天気を自動取得"
+                TextColor="Black" />
+
             <Label Text="天気" />
             <Picker
                 Title="選択してください"
