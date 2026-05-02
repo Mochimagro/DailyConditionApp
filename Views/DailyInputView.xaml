@@ -32,10 +32,7 @@
 
 
                 <Label Text="睡眠効率（％）" />
-                <Entry
-                    Keyboard="Numeric"
-                    Placeholder="例: 85"
-                    Text="{Binding SleepEfficiency, Mode=TwoWay}" />
+                <Picker ItemsSource="{Binding PickerPerNumberItems}" SelectedItem="{Binding SleepEfficiency, Mode=TwoWay}" />
 
                 <Label Text="天気" />
                 <Picker
@@ -58,9 +55,9 @@
                 <!--  送信ボタン  -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <Button

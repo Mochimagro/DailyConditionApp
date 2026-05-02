@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using DailyConditionApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,8 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty]
         private string _windSpeed;
 
+        [ObservableProperty]
+        private ObservableCollection<int> _pickerPerNumberItems;
 
         public DailyInputViewModel(ISettingsService settingsService, IWeatherService weatherService,IDialogService dialogService,INotionService notionService)
         {
@@ -51,6 +54,8 @@ namespace DailyConditionApp.ViewModels
             _notionService = notionService;
 
             Date = DateTime.Now.ToString("yyyy-MM-dd");
+
+            PickerPerNumberItems = new ObservableCollection<int>(Enumerable.Range(0, 101).Reverse()); // 1~100の選択肢を用意
 
             // 初期値を SleepTime から同期
             SleepHour = SleepTime.Hours;
