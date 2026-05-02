@@ -25,7 +25,13 @@ namespace DailyConditionApp.ViewModels
         private TimeSpan _sleepTime;
 
         [ObservableProperty]
-        private string _sleepEfficiency;
+        private int _sleepHour;
+
+        [ObservableProperty]
+        private int _sleepMinute;
+
+        [ObservableProperty]
+        private int _sleepEfficiency = 100;
 
         [ObservableProperty]
         private string _weather;
@@ -45,6 +51,10 @@ namespace DailyConditionApp.ViewModels
             _notionService = notionService;
 
             Date = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // 初期値を SleepTime から同期
+            SleepHour = SleepTime.Hours;
+            SleepMinute = SleepTime.Minutes;
         }
 
         // Picker の選択肢
@@ -56,6 +66,31 @@ namespace DailyConditionApp.ViewModels
             "雪",
             "台風"
         };
+
+        // 時間ドラム用のデータ
+        public IReadOnlyList<int> Hours { get; } = Enumerable.Range(0, 24).ToArray();
+        public IReadOnlyList<int> Minutes { get; } = Enumerable.Range(0, 60).ToArray();
+
+        // SleepTime が変更されたら Hour/Minute を更新
+        partial void OnSleepTimeChanged(TimeSpan value)
+        {
+            if (SleepHour != value.Hours) SleepHour = value.Hours;
+            if (SleepMinute != value.Minutes) SleepMinute = value.Minutes;
+        }
+
+        // Hour が変更されたら SleepTime を更新
+        partial void OnSleepHourChanged(int value)
+        {
+            var newTs = new TimeSpan(value, SleepMinute, 0);
+            if (SleepTime != newTs) SleepTime = newTs;
+        }
+
+        // Minute が変更されたら SleepTime を更新
+        partial void OnSleepMinuteChanged(int value)
+        {
+            var newTs = new TimeSpan(SleepHour, value, 0);
+            if (SleepTime != newTs) SleepTime = newTs;
+        }
 
         [RelayCommand]
         private async Task FetchWeatherAsync()
@@ -122,6 +157,8 @@ namespace DailyConditionApp.ViewModels
                 var logData = new DailyLogData(
                     Date: DateTime.Now.ToString("yyyy-MM-dd"), // 日本時間で取得する場合は調整が必要
                     WeatherLabel: Weather,
+                    SleepTime: SleepTime.TotalHours, // TimeSpanを時間数に変換
+                    SleepEfficiency:(double)SleepEfficiency / 100,
                     PressureDiff: pressureDiff,
                     WindSpeed: windSpeed
                 // RelatedPageId: "取得したIDがあればここに入れる"

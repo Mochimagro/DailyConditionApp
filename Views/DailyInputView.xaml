@@ -16,11 +16,19 @@
                     Text="{Binding Date, Mode=TwoWay}" />
 
 
-                <Label Text="睡眠時間（HH:mm）" />
-                <Entry
-                    Keyboard="Time"
-                    Placeholder="例: 07:30"
-                    Text="{Binding SleepTime, Mode=TwoWay}" />
+                <Label Text="睡眠時間（時間:分）" />
+                <HorizontalStackLayout Spacing="8">
+                    <Picker
+                        Title="時"
+                        HorizontalTextAlignment="End"
+                        ItemsSource="{Binding Hours}"
+                        SelectedItem="{Binding SleepHour, Mode=TwoWay}" />
+                    <Label Text=":" VerticalOptions="Center" />
+                    <Picker
+                        Title="分"
+                        ItemsSource="{Binding Minutes}"
+                        SelectedItem="{Binding SleepMinute, Mode=TwoWay}" />
+                </HorizontalStackLayout>
 
 
                 <Label Text="睡眠効率（％）" />
@@ -28,13 +36,6 @@
                     Keyboard="Numeric"
                     Placeholder="例: 85"
                     Text="{Binding SleepEfficiency, Mode=TwoWay}" />
-
-                <Button
-                    Margin="0,10"
-                    BackgroundColor="LightBlue"
-                    Command="{Binding FetchWeatherCommand}"
-                    Text="現在の天気を自動取得"
-                    TextColor="Black" />
 
                 <Label Text="天気" />
                 <Picker
@@ -55,13 +56,28 @@
                     Text="{Binding WindSpeed, Mode=TwoWay}" />
 
                 <!--  送信ボタン  -->
-                <HorizontalStackLayout HorizontalOptions="End">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
                     <Button
+                        Grid.Column="0"
+                        BackgroundColor="LightBlue"
+                        Command="{Binding FetchWeatherCommand}"
+                        HorizontalOptions="Start"
+                        Text="天気情報を再取得"
+                        TextColor="Black" />
+
+                    <Button
+                        Grid.Column="2"
                         AutomationId="WriteToNotionButton"
                         Command="{Binding WriteToNotionCommand}"
                         HorizontalOptions="End"
                         Text="送信" />
-                </HorizontalStackLayout>
+                </Grid>
             </VerticalStackLayout>
 
             <controls:LoadingView />

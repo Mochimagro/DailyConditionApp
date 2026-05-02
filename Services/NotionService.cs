@@ -10,6 +10,8 @@ namespace DailyConditionApp.Services
 {
     public record DailyLogData(
     string Date, // "yyyy-MM-dd"
+    double SleepTime,
+    double SleepEfficiency,
     string WeatherLabel,
     double PressureDiff,
     double WindSpeed,
@@ -33,6 +35,8 @@ namespace DailyConditionApp.Services
             {
                 ["名前"] = new { title = new[] { new { text = new { content = $"{logData.Date} のログ" } } } },
                 ["日付"] = new { date = new { start = logData.Date } },
+                ["睡眠時間(h)"] = new { number = logData.SleepTime },
+                ["睡眠効率"] = new { number = logData.SleepEfficiency },
                 ["天気"] = new { select = new { name = logData.WeatherLabel } },
                 ["当日気圧差"] = new { number = logData.PressureDiff },
                 ["風速(m/s)"] = new { number = logData.WindSpeed }
