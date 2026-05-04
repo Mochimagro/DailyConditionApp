@@ -38,7 +38,7 @@ namespace DailyConditionApp.ViewModels
         private string _weather;
 
         [ObservableProperty]
-        private string _pressure;
+        private string _pressureDiff;
 
         [ObservableProperty]
         private string _windSpeed;
@@ -117,7 +117,7 @@ namespace DailyConditionApp.ViewModels
             if (condition != null)
             {
                 Weather = condition.CustomStatus; // 例: "曇りがち"
-                Pressure = condition.Pressure.ToString(); // 例: "1013"
+                PressureDiff = condition.AvgPressureDiff.ToString(); // 例: "1013"
                                                           // 時速(km/h) を 秒速(m/s) に変換して小数点第1位まで表示
                                                           // 1 km/h = 1000m / 3600s ≒ 1 / 3.6
                 double windMs = condition.WindSpeed / 3.6;
@@ -155,7 +155,7 @@ namespace DailyConditionApp.ViewModels
                 }
 
                 // 2. 文字列の入力値を数値に変換 (バリデーションを兼ねる)
-                _ = double.TryParse(Pressure, out double pressureDiff);
+                _ = double.TryParse(PressureDiff, out double pressureDiff);
                 _ = double.TryParse(WindSpeed, out double windSpeed);
 
                 // 3. Notionに送るデータを用意

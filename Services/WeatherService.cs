@@ -14,6 +14,7 @@ namespace DailyConditionApp.Services
     {
         public string Description { get; set; } = string.Empty;
         public double Pressure { get; set; } // hPa
+        public double AvgPressureDiff { get; set; } // 9:00-18:00の平均気圧差（hPa）
         public double WindSpeed { get; set; } // m/s
         public string CustomStatus { get; set; } = string.Empty;
     }
@@ -30,7 +31,8 @@ namespace DailyConditionApp.Services
 
         public async Task<WeatherCondition?> GetWeatherAsync(string apiKey, string lat, string lon)
         {
-            string url = $"https://api.weatherapi.com/v1/current.json?key={apiKey}&q={lat},{lon}&lang=ja&aqi=no";
+            // forecast.json に変更し、days=1 を指定することで1時間ごとのデータ(hour配列)を取得可能にする
+            string url = $"https://api.weatherapi.com/v1/forecast.json?key={apiKey}&q={lat},{lon}&days=1&lang=ja&aqi=no&alerts=no";
 
             try
             {
@@ -39,9 +41,43 @@ namespace DailyConditionApp.Services
 
                 string json = await response.Content.ReadAsStringAsync();
                 using var doc = JsonDocument.Parse(json);
-                var current = doc.RootElement.GetProperty("current");
+                var root = doc.RootElement;
 
-                // GASロジックに必要な値を取得
+                // 「現在」のデータ
+                var current = root.GetProperty("current");
+                // 「当日」の予報データ（1時間ごとの配列を含む）
+                var forecastDay = root.GetProperty("forecast").GetProperty("forecastday")[0];
+                var hours = forecastDay.GetProperty("hour").EnumerateArray();
+
+                // 1. 9:00から18:00のデータを抽出
+                var targetHours = hours.Where(h =>
+                {
+                    var timeStr = h.GetProperty("time").GetString();
+                    if (DateTime.TryParse(timeStr, out var time))
+                    {
+                        return time.Hour >= 9 && time.Hour <= 18;
+                    }
+                    return false;
+                }).ToList();
+
+                // 2. 気圧差の平均を計算
+                double totalDiff = 0;
+                int count = 0;
+
+                for (int i = 1; i < targetHours.Count; i++)
+                {
+                    double prevPressure = targetHours[i - 1].GetProperty("pressure_mb").GetDouble();
+                    double currentPressure = targetHours[i].GetProperty("pressure_mb").GetDouble();
+
+                    // 1時間ごとの変動量（絶対値）を加算
+                    totalDiff += Math.Abs(currentPressure - prevPressure);
+                    count++;
+                }
+
+                // 平均階差（9時から18時までだと9個の差分データができるはず）
+                double avgPressureDiff = count > 0 ? Math.Round(totalDiff / count, 2) : 0;
+
+                // 残りのロジックは流用
                 int code = current.GetProperty("condition").GetProperty("code").GetInt32();
                 int cloud = current.GetProperty("cloud").GetInt32();
                 double precip = current.GetProperty("precip_mm").GetDouble();
@@ -49,10 +85,9 @@ namespace DailyConditionApp.Services
                 return new WeatherCondition
                 {
                     Description = current.GetProperty("condition").GetProperty("text").GetString() ?? "",
-                    Pressure = current.GetProperty("pressure_mb").GetDouble(),
+                    Pressure = current.GetProperty("pressure_mb").GetDouble(), // 現在の気圧
+                    AvgPressureDiff = avgPressureDiff, // ★算出値
                     WindSpeed = current.GetProperty("wind_kph").GetDouble(),
-
-                    // GASから移植した判定ロジックを適用
                     CustomStatus = InterpretWeatherCondition(code, cloud, precip)
                 };
             }

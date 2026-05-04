@@ -9,5 +9,6 @@ namespace DailyConditionApp.Services
     public interface INotionService
     {
         Task<bool> AddDailyLogAsync(string token, string databaseId, DailyLogData logData);
+        Task<TodayConditionResult?> GetTodayConditionAsync(string token, string databaseId, string dateString);
     }
 }

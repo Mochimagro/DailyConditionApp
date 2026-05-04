@@ -40,11 +40,11 @@
                     ItemsSource="{Binding WeatherOptions}"
                     SelectedItem="{Binding Weather, Mode=TwoWay}" />
 
-                <Label Text="気圧（hPa）" />
+                <Label Text="気圧差（hPa）" />
                 <Entry
                     Keyboard="Numeric"
                     Placeholder="例: 1013.25"
-                    Text="{Binding Pressure, Mode=TwoWay}" />
+                    Text="{Binding PressureDiff, Mode=TwoWay}" />
 
                 <Label Text="風速（m/s）" />
                 <Entry

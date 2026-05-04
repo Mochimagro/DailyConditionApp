@@ -10,6 +10,7 @@ namespace DailyConditionApp.Services
 {
     public class DialogService : IDialogService
     {
+
         public async Task ShowToastAsync(string message)
         {
             await Toast.Make(message, ToastDuration.Short).Show();

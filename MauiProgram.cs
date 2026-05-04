@@ -7,6 +7,7 @@ using DailyConditionApp.Views.Controls;
 
 public static class MauiProgram
 {
+    public static IServiceProvider CurrentServiceProvider { get; private set; }
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -25,6 +26,15 @@ public static class MauiProgram
 
         // Continue initializing your .NET MAUI App here
 
+
+        builder.Services.AddSingleton<ISettingsService, SettingsService>();
+
+        builder.Services.AddSingleton<IDialogService, DialogService>();
+
+        builder.Services.AddHttpClient<INotionService, NotionService>();
+
+        builder.Services.AddHttpClient<IWeatherService, WeatherService>();
+
         builder.Services.AddSingleton<MainView>();
         builder.Services.AddSingleton<MainViewModel>();
 
@@ -34,18 +44,20 @@ public static class MauiProgram
         builder.Services.AddTransient<DailyConditionResultView>();
         builder.Services.AddTransient<DailyConditionResultViewModel>();
 
+        builder.Services.AddTransient<PostedDailyView>();
+        builder.Services.AddTransient<PostedDailyViewModel>();
+
+        builder.Services.AddSingleton<PostedDailyView>();
+        builder.Services.AddSingleton<PostedDailyViewModel>();
+
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
 
         builder.Services.AddTransient<LoadingView>();
+        var app = builder.Build();
 
-        builder.Services.AddSingleton<ISettingsService,SettingsService>();
+        CurrentServiceProvider = app.Services;
 
-        builder.Services.AddSingleton<IDialogService, DialogService>();
-
-        builder.Services.AddHttpClient<INotionService, NotionService>();
-
-        builder.Services.AddHttpClient<IWeatherService, WeatherService>();
-        return builder.Build();
+        return app;
     }
 }

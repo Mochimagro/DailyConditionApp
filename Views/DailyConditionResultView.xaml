@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<ContentView
     x:Class="DailyConditionApp.Views.DailyConditionResultView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="結果表示">
-    <VerticalStackLayout Padding="30" Spacing="20">
-        <Label
-            FontSize="24"
-            HorizontalOptions="Center"
-            Text="{Binding Title}" />
-        <Button Command="{Binding GoToPageACommand}" Text="コードからページAへ遷移する" />
-    </VerticalStackLayout>
-</ContentPage>
+    xmlns:vm="clr-namespace:DailyConditionApp.ViewModels">
+
+    <Border Padding="20" BackgroundColor="#1E1E1E">
+        <VerticalStackLayout Spacing="10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="18"
+                Text="本日のコンディション"
+                TextColor="White" />
+
+            <Grid
+                ColumnDefinitions="Auto, *"
+                ColumnSpacing="15"
+                RowDefinitions="Auto, Auto"
+                RowSpacing="10">
+                <!--  環境スコア  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="環境スコア:"
+                    TextColor="#AAAAAA" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    Text="{Binding EnvironmentScoreText}"
+                    TextColor="#42A5F5" />
+
+                <!--  一言評価  -->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="評価:"
+                    TextColor="#AAAAAA" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    LineBreakMode="WordWrap"
+                    Text="{Binding ConditionCommentText}"
+                    TextColor="White" />
+            </Grid>
+
+            <!--  読み込みボタン (必要に応じて自動読み込みに切り替えてもOKです)  -->
+            <Button
+                Margin="0,10,0,0"
+                Command="{Binding LoadResultCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="更新" />
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

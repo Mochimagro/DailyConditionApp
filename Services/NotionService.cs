@@ -17,7 +17,9 @@ namespace DailyConditionApp.Services
     double WindSpeed,
     string? RelatedPageId = null // 必要に応じてリレーション用
 );
-    class NotionService: INotionService
+    public record TodayConditionResult(double EnvironmentScore, string ConditionComment);
+
+    public class NotionService: INotionService
     {
         private readonly HttpClient _httpClient;
         private const string NotionVersion = "2022-06-28";
@@ -78,6 +80,78 @@ namespace DailyConditionApp.Services
                 // 通信エラー時
                 return false;
             }
+        }
+
+        private const string NotionQueryUrl = "https://api.notion.com/v1/databases/{0}/query";
+
+        public async Task<TodayConditionResult?> GetTodayConditionAsync(string token, string databaseId, string dateString)
+        {
+            string url = string.Format(NotionQueryUrl, databaseId);
+
+            // 1. クエリのフィルター条件（日付プロパティが「今日」と一致するもの）
+            // ※プロパティ名「日付」はご自身のNotionに合わせて変更してください
+            var payload = new
+            {
+                filter = new
+                {
+                    property = "日付",
+                    date = new { @equals = dateString }
+                }
+            };
+
+            string jsonPayload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Headers.Add("Notion-Version", NotionVersion);
+            request.Content = content;
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                if (!response.IsSuccessStatusCode) return null;
+
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(jsonResponse);
+                var results = doc.RootElement.GetProperty("results");
+
+                if (results.GetArrayLength() == 0) return null; // 今日のデータがまだ無い場合
+
+                // 2. 最新の1件目を取得
+                var properties = results[0].GetProperty("properties");
+
+                // 3. 値の抽出
+                // ※Notionのプロパティ型（number, rich_text, selectなど）に合わせてパースします
+                var score = ExtractNotionNumber(properties, "環境コンディションスコア");
+                string comment = ExtractNotionRichText(properties, "コンディション一言評価");
+
+                return new TodayConditionResult(score, comment);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        // --- JSON抽出用のヘルパーメソッド ---
+
+        private double ExtractNotionNumber(JsonElement properties, string propertyName)
+        {
+            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula", out var formula) && formula.TryGetProperty("number",out var number))
+            {
+                return number.ValueKind != JsonValueKind.Null ? number.GetDouble() : 0;
+            }
+            return 0;
+        }
+
+        private string ExtractNotionRichText(JsonElement properties, string propertyName)
+        {
+            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula",out var formula) && formula.TryGetProperty("string", out var richTextArray))
+            {
+                return richTextArray.ValueKind != JsonValueKind.Null ? richTextArray.ToString() : "";
+            }
+            return "データなし";
         }
     }
 }

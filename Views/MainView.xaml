@@ -12,5 +12,8 @@
             HorizontalOptions="Center"
             Text="{Binding Title}" />
         <Button Command="{Binding GoToDailyInputCommand}" Text="今日のコンディションを入力する" />
+
+        <views:DailyConditionResultView x:Name="ResultView" />
+
     </VerticalStackLayout>
 </ContentPage>

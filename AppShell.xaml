@@ -25,7 +25,7 @@
     </FlyoutItem>
 
     <FlyoutItem Title="結果表示">
-        <ShellContent ContentTemplate="{DataTemplate views:DailyConditionResultView}" Route="DailyConditionResultView" />
+        <ShellContent ContentTemplate="{DataTemplate views:PostedDailyView}" Route="PostedDailyView" />
     </FlyoutItem>
 
     <FlyoutItem Title="設定">
