@@ -35,20 +35,17 @@ public static class MauiProgram
 
         builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
-        builder.Services.AddSingleton<MainView>();
-        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddTransient<MainView>();
+        builder.Services.AddTransient<MainViewModel>();
 
         builder.Services.AddTransient<DailyInputView>();
         builder.Services.AddTransient<DailyInputViewModel>();
 
-        builder.Services.AddTransient<DailyConditionResultView>();
-        builder.Services.AddTransient<DailyConditionResultViewModel>();
+        builder.Services.AddSingleton<DailyConditionResultView>();
+        builder.Services.AddSingleton<DailyConditionResultViewModel>();
 
         builder.Services.AddTransient<PostedDailyView>();
         builder.Services.AddTransient<PostedDailyViewModel>();
-
-        builder.Services.AddSingleton<PostedDailyView>();
-        builder.Services.AddSingleton<PostedDailyViewModel>();
 
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();

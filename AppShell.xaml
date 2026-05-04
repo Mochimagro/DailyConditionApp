@@ -24,10 +24,12 @@
         <ShellContent ContentTemplate="{DataTemplate views:DailyInputView}" Route="DailyInputView" />
     </FlyoutItem>
 
+    <!--
     <FlyoutItem Title="結果表示">
         <ShellContent ContentTemplate="{DataTemplate views:PostedDailyView}" Route="PostedDailyView" />
     </FlyoutItem>
-
+    -->
+    
     <FlyoutItem Title="設定">
         <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />
     </FlyoutItem>

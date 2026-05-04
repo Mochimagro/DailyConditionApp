@@ -7,5 +7,10 @@
     <VerticalStackLayout>
         <!--  ここにコンディション結果パーツを配置  -->
         <views:DailyConditionResultView />
+
+        <Button
+            Margin="0,20,0,0"
+            Command="{Binding GoToMainCommand}"
+            Text="トップに戻る" />
     </VerticalStackLayout>
 </ContentPage>

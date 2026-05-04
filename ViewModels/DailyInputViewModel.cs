@@ -175,6 +175,18 @@ namespace DailyConditionApp.ViewModels
                 if (isSuccess)
                 {
                     await _dialogService.ShowToastAsync("Notionへの保存に成功しました");
+
+                    // 1. 完了画面(PostedDailyView)へ遷移
+                    // ※ AppShellにルート登録されている必要があります
+                    await Shell.Current.GoToAsync("PostedDailyView");
+
+                    // 2. ResultViewModelを解決して最新スコアを読み込む
+                    if (MauiProgram.CurrentServiceProvider != null)
+                    {
+                        var resultVm = MauiProgram.CurrentServiceProvider.GetService<DailyConditionResultViewModel>();
+                        // 非同期コマンドを待機せずに実行（または await resultVm.LoadResultAsync()）
+                        _ = resultVm?.LoadResultAsync();
+                    }
                 }
                 else
                 {
