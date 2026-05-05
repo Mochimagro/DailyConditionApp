@@ -29,7 +29,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:PostedDailyView}" Route="PostedDailyView" />
     </FlyoutItem>
     -->
-    
+
     <FlyoutItem Title="設定">
         <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />
     </FlyoutItem>

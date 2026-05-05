@@ -7,7 +7,13 @@ namespace DailyConditionApp.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _title = "トップページです";
+        private string _title = "";
+
+
+        public MainViewModel()
+        {
+            Title = $"{DateTime.Today.ToString("yyyy年MM月dd日")}";
+        }
 
         // サイドメニューからではなく、画面内のボタンから直接PageAに遷移したい場合の例
         [RelayCommand]

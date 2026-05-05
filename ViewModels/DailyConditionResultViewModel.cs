@@ -17,6 +17,11 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty] private string _environmentScoreText = "--";
         [ObservableProperty] private string _conditionCommentText = "読み込み中...";
 
+        [ObservableProperty] private int _sleepScore;
+        [ObservableProperty] private int _pressureScore;
+        [ObservableProperty] private int _weatherScore;
+        [ObservableProperty] private int _windScore;
+
         public DailyConditionResultViewModel(INotionService notionService, ISettingsService settingsService)
         {
             _notionService = notionService;
@@ -40,10 +45,21 @@ namespace DailyConditionApp.ViewModels
                 {
                     EnvironmentScoreText = Math.Ceiling(result.EnvironmentScore).ToString();
                     ConditionCommentText = result.ConditionComment;
+
+                    // 各スコアは Notion から取得した数値を小数点切り上げで表示
+                    SleepScore = (int)Math.Ceiling(result.SleepScore);
+                    PressureScore = (int)Math.Ceiling(result.PressureScore);
+                    WeatherScore = (int)Math.Ceiling(result.WeatherScore);
+                    WindScore = (int)Math.Ceiling(result.WindScore);
                 }
                 else
                 {
                     ConditionCommentText = "本日のデータはまだ登録されていません。";
+                    // スコアはデフォルト 0 に戻す（任意）
+                    SleepScore = 0;
+                    PressureScore = 0;
+                    WeatherScore = 0;
+                    WindScore = 0;
                 }
             }
             finally

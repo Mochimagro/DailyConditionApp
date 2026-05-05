@@ -17,7 +17,7 @@ namespace DailyConditionApp.Services
     double WindSpeed,
     string? RelatedPageId = null // 必要に応じてリレーション用
 );
-    public record TodayConditionResult(double EnvironmentScore, string ConditionComment);
+    public record TodayConditionResult(double EnvironmentScore, string ConditionComment, double SleepScore = 0, double PressureScore = 0, double WeatherScore = 0, double WindScore = 0);
 
     public class NotionService: INotionService
     {
@@ -126,7 +126,13 @@ namespace DailyConditionApp.Services
                 var score = ExtractNotionNumber(properties, "環境コンディションスコア");
                 string comment = ExtractNotionRichText(properties, "コンディション一言評価");
 
-                return new TodayConditionResult(score, comment);
+                // 以下、各スコア（Notion 側で formula 等で算出している想定）
+                var sleepScore = ExtractNotionNumber(properties, "睡眠スコア");
+                var pressureScore = ExtractNotionNumber(properties, "気圧差スコア");
+                var weatherScore = ExtractNotionNumber(properties, "天気スコア");
+                var windScore = ExtractNotionNumber(properties, "風速スコア");
+
+                return new TodayConditionResult(score, comment, sleepScore, pressureScore, weatherScore, windScore);
             }
             catch (Exception)
             {

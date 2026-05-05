@@ -14,35 +14,157 @@
                 TextColor="White" />
 
             <Grid
-                ColumnDefinitions="Auto, *"
-                ColumnSpacing="15"
-                RowDefinitions="Auto, Auto"
+                ColumnDefinitions="Auto, Auto,*"
+                ColumnSpacing="10"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                 RowSpacing="10">
                 <!--  環境スコア  -->
                 <Label
                     Grid.Row="0"
                     Grid.Column="0"
+                    HorizontalOptions="End"
                     Text="環境スコア:"
-                    TextColor="#AAAAAA" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    Text="{Binding EnvironmentScoreText}"
-                    TextColor="#42A5F5" />
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="48"
+                        Text="{Binding EnvironmentScoreText}"
+                        TextColor="#42A5F5" />
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="/100"
+                        TextColor="#AAAAAA"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
 
                 <!--  一言評価  -->
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
+                    HorizontalOptions="End"
                     Text="評価:"
-                    TextColor="#AAAAAA" />
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
                 <Label
                     Grid.Row="1"
                     Grid.Column="1"
+                    FontSize="Large"
                     LineBreakMode="WordWrap"
                     Text="{Binding ConditionCommentText}"
                     TextColor="White" />
+
+                <!--  各スコア  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    FontSize="Header"
+                    HorizontalOptions="Center"
+                    Text="-- 各スコア詳細 --"
+                    TextColor="White" />
+
+                <!--  睡眠スコア  -->
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    Text="睡眠:"
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Spacing="20">
+                    <Label
+                        FontSize="Body"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding SleepScore}"
+                        TextColor="White" />
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="/50"
+                        TextColor="#AAAAAA"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+
+                <!--  気圧差スコア  -->
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    Text="気圧差:"
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
+                <HorizontalStackLayout
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Spacing="20">
+                    <Label
+                        FontSize="Body"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding PressureScore}"
+                        TextColor="White" />
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="/30"
+                        TextColor="#AAAAAA"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+
+                <!--  天気スコア  -->
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    Text="天気:"
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
+                <HorizontalStackLayout
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Spacing="20">
+                    <Label
+                        FontSize="Body"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding WeatherScore}"
+                        TextColor="White" />
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="/15"
+                        TextColor="#AAAAAA"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+
+                <!--  風速スコア  -->
+                <Label
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    Text="風速:"
+                    TextColor="#AAAAAA"
+                    VerticalOptions="End" />
+                <HorizontalStackLayout
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Spacing="20">
+                    <Label
+                        FontSize="Body"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding WindScore}"
+                        TextColor="White" />
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="/5"
+                        TextColor="#AAAAAA"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+
             </Grid>
 
             <!--  読み込みボタン (必要に応じて自動読み込みに切り替えてもOKです)  -->
