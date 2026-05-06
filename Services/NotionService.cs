@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyConditionApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -19,7 +20,7 @@ namespace DailyConditionApp.Services
 );
     public record TodayConditionResult(double EnvironmentScore, string ConditionComment, double SleepScore = 0, double PressureScore = 0, double WeatherScore = 0, double WindScore = 0);
 
-    public class NotionService: INotionService
+    public class NotionService : INotionService
     {
         private readonly HttpClient _httpClient;
         private const string NotionVersion = "2022-06-28";
@@ -144,7 +145,7 @@ namespace DailyConditionApp.Services
 
         private double ExtractNotionNumber(JsonElement properties, string propertyName)
         {
-            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula", out var formula) && formula.TryGetProperty("number",out var number))
+            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula", out var formula) && formula.TryGetProperty("number", out var number))
             {
                 return number.ValueKind != JsonValueKind.Null ? number.GetDouble() : 0;
             }
@@ -153,11 +154,94 @@ namespace DailyConditionApp.Services
 
         private string ExtractNotionRichText(JsonElement properties, string propertyName)
         {
-            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula",out var formula) && formula.TryGetProperty("string", out var richTextArray))
+            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("formula", out var formula) && formula.TryGetProperty("string", out var richTextArray))
             {
                 return richTextArray.ValueKind != JsonValueKind.Null ? richTextArray.ToString() : "";
             }
             return "データなし";
+        }
+    
+
+    public async Task<List<SleepScoreItem>> GetWeeklySleepScoresAsync(string token, string databaseId)
+        {
+            string url = string.Format(NotionQueryUrl, databaseId);
+
+            // 今日から7日前の日付文字列を生成
+            string sevenDaysAgo = DateTime.Now.AddDays(-6).ToString("yyyy-MM-dd"); // 今日を含めて7日分
+
+            // Notion API クエリ（過去7日分の日付以降のデータを、日付の降順で取得）
+            var payload = new
+            {
+                filter = new
+                {
+                    property = "日付", // ※ご自身のNotionのプロパティ名に合わせる
+                    date = new { on_or_after = sevenDaysAgo }
+                },
+                sorts = new[]
+                {
+                new { property = "日付", direction = "descending" }
+            }
+            };
+
+            string jsonPayload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Headers.Add("Notion-Version", NotionVersion);
+            request.Content = content;
+
+            var resultsList = new List<SleepScoreItem>();
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+                if (!response.IsSuccessStatusCode) return resultsList;
+
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(jsonResponse);
+                var results = doc.RootElement.GetProperty("results").EnumerateArray();
+
+                foreach (var item in results)
+                {
+                    var properties = item.GetProperty("properties");
+
+                    // 日付の取得
+                    string dateStr = ExtractNotionDate(properties, "日付");
+                    // 睡眠スコアの取得
+                    var scoreStr = ExtractNotionNumber(properties, "睡眠スコア");
+
+                    if (DateTime.TryParse(dateStr, out DateTime parsedDate))
+                    {
+                        int? parsedScore = (int?)scoreStr;
+
+                        resultsList.Add(new SleepScoreItem
+                        {
+                            Date = parsedDate.Date,
+                            Score = parsedScore
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Notion API Error: {ex.Message}");
+            }
+
+            return resultsList;
+        }
+
+        // --- 日付抽出用のヘルパーメソッドを追加 ---
+        private string ExtractNotionDate(JsonElement properties, string propertyName)
+        {
+            if (properties.TryGetProperty(propertyName, out var prop) && prop.TryGetProperty("date", out var dateToken))
+            {
+                if (dateToken.ValueKind != JsonValueKind.Null && dateToken.TryGetProperty("start", out var startToken))
+                {
+                    return startToken.GetString() ?? "";
+                }
+            }
+            return "";
         }
     }
 }

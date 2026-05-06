@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DailyConditionApp.Models;
+using DailyConditionApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,14 +13,17 @@ namespace DailyConditionApp.ViewModels
 {
     public partial class WeeklyResultsViewModel : BaseViewModel
     {
-        // リストのデータソース
+        private readonly INotionService _notionService;
+        private readonly ISettingsService _settingsService;
+
         [ObservableProperty]
         private ObservableCollection<SleepScoreItem> _weeklyScores = new();
 
-        public WeeklyResultsViewModel()
+        // コンストラクタでServiceを受け取るように修正
+        public WeeklyResultsViewModel(INotionService notionService, ISettingsService settingsService)
         {
-            // プレビュー用に仮データを初期化時に読み込む（後でAPI連携に置き換え）
-            LoadMockData();
+            _notionService = notionService;
+            _settingsService = settingsService;
         }
 
         [RelayCommand]
@@ -30,31 +34,43 @@ namespace DailyConditionApp.ViewModels
 
             try
             {
-                // TODO: ここにNotion APIなどから過去7日分のデータを取得する処理を実装
-                await Task.Delay(500); // 通信のモック
+                var notionKey = await _settingsService.LoadNotionKeyAsync();
+
+                // Notionから生データを取得
+                var fetchedData = await _notionService.GetWeeklySleepScoresAsync(notionKey.token, notionKey.databaseId);
+
+                // カレンダー通りの7日分のリストを生成する
+                var completeWeeklyData = new List<SleepScoreItem>();
+                DateTime today = DateTime.Now.Date;
+
+                for (int i = 0; i < 7; i++)
+                {
+                    DateTime targetDate = today.AddDays(-i);
+
+                    // Notionの取得結果の中に、対象日のデータがあるか探す
+                    var matchedItem = fetchedData.FirstOrDefault(d => d.Date == targetDate);
+
+                    completeWeeklyData.Add(new SleepScoreItem
+                    {
+                        Date = targetDate,
+                        Score = matchedItem?.Score // データがあればScoreを入れ、なければnull
+                    });
+                }
+
+                // メインスレッドでUIを更新
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    WeeklyScores.Clear();
+                    foreach (var item in completeWeeklyData)
+                    {
+                        WeeklyScores.Add(item);
+                    }
+                });
             }
             finally
             {
                 IsBusy = false;
             }
-        }
-
-        private void LoadMockData()
-        {
-            var mockData = new List<SleepScoreItem>();
-            DateTime today = DateTime.Now;
-
-            // 過去7日分のモックデータを生成（最新日付が上に来るように降順で作成）
-            for (int i = 0; i < 7; i++)
-            {
-                mockData.Add(new SleepScoreItem
-                {
-                    Date = today.AddDays(-i),
-                    Score = Random.Shared.Next(60, 101) // 60〜100点のランダム
-                });
-            }
-
-            WeeklyScores = new ObservableCollection<SleepScoreItem>(mockData);
         }
     }
 }

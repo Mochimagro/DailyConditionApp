@@ -34,22 +34,29 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:SleepScoreItem">
 
-                        <Border Padding="15,10" BackgroundColor="#2C2C2C">
+                        <Frame
+                            Padding="15,10"
+                            BackgroundColor="#2C2C2C"
+                            BorderColor="Transparent"
+                            CornerRadius="8"
+                            HasShadow="False">
                             <Grid ColumnDefinitions="Auto, *, Auto">
+                                <!--  日付  -->
                                 <Label
                                     Grid.Column="0"
                                     Text="{Binding FormattedDate}"
                                     TextColor="#AAAAAA"
                                     VerticalOptions="Center" />
 
+                                <!--  スコア (DisplayScore と ScoreColor を使用)  -->
                                 <Label
                                     Grid.Column="2"
                                     FontAttributes="Bold"
-                                    Text="{Binding Score, StringFormat='{0} 点'}"
-                                    TextColor="#42A5F5"
+                                    Text="{Binding DisplayScore}"
+                                    TextColor="{Binding ScoreColor}"
                                     VerticalOptions="Center" />
                             </Grid>
-                        </Border>
+                        </Frame>
 
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
