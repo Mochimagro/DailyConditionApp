@@ -67,5 +67,20 @@ namespace DailyConditionApp.ViewModels
                 IsBusy = false;
             }
         }
+
+        [RelayCommand]
+        private void PushScoreNotification()
+        {
+            // Android版のNotificationServiceを取得
+            var notificationService = DependencyService.Get<INotificationService>();
+
+            if (notificationService != null)
+            {
+                string title = $"スコア：{EnvironmentScoreText} ";
+                string message = $"{ConditionCommentText}";
+
+                notificationService.ShowPersistentNotification(title, message);
+            }
+        }
     }
 }

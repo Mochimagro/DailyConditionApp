@@ -24,11 +24,9 @@
         <ShellContent ContentTemplate="{DataTemplate views:DailyInputView}" Route="DailyInputView" />
     </FlyoutItem>
 
-    <!--
-    <FlyoutItem Title="結果表示">
-        <ShellContent ContentTemplate="{DataTemplate views:PostedDailyView}" Route="PostedDailyView" />
+    <FlyoutItem Title="週間データ">
+        <ShellContent ContentTemplate="{DataTemplate views:WeeklyResultsView}" Route="WeeklyResultsView" />
     </FlyoutItem>
-    -->
 
     <FlyoutItem Title="設定">
         <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />

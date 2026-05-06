@@ -72,6 +72,9 @@
 	  <Compile Update="Views\Controls\LoadingView.xaml.cs">
 	    <DependentUpon>LoadingView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\WeeklyResultsView.xaml.cs">
+	    <DependentUpon>WeeklyResultsView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,6 +88,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MainView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\WeeklyResultsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PostedDailyView.xaml">

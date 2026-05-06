@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DailyConditionApp.Views.WeeklyResultsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:DailyConditionApp.Models"
+    Title="WeeklyResultsView">
+    <Border Padding="20" BackgroundColor="#1E1E1E">
+        <VerticalStackLayout Spacing="15">
+
+            <Grid ColumnDefinitions="*, Auto">
+                <Label
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="過去1週間の睡眠スコア"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    Padding="10,0"
+                    Command="{Binding LoadWeeklyDataCommand}"
+                    FontSize="12"
+                    HeightRequest="35"
+                    Text="更新" />
+            </Grid>
+
+            <BoxView
+                Margin="0,5"
+                HeightRequest="1"
+                Color="#444" />
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding WeeklyScores}" Spacing="8">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:SleepScoreItem">
+
+                        <Border Padding="15,10" BackgroundColor="#2C2C2C">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding FormattedDate}"
+                                    TextColor="#AAAAAA"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.Column="2"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Score, StringFormat='{0} 点'}"
+                                    TextColor="#42A5F5"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </Border>
+</ContentPage>

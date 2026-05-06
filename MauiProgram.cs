@@ -35,6 +35,10 @@ public static class MauiProgram
 
         builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
+#if ANDROID
+        DependencyService.Register<INotificationService, DailyConditionApp.Platforms.Android.AndroidNotificationService>();
+#endif
+
         builder.Services.AddTransient<MainView>();
         builder.Services.AddTransient<MainViewModel>();
 
@@ -49,6 +53,9 @@ public static class MauiProgram
 
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
+
+        builder.Services.AddTransient<WeeklyResultsView>();
+        builder.Services.AddTransient<WeeklyResultsViewModel>();
 
         builder.Services.AddTransient<LoadingView>();
         var app = builder.Build();

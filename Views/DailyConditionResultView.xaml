@@ -167,6 +167,16 @@
 
             </Grid>
 
+            <Button
+                Margin="0,5,0,0"
+                BackgroundColor="#42A5F5"
+                Command="{Binding PushScoreNotificationCommand}"
+                CornerRadius="20"
+                FontSize="12"
+                HeightRequest="40"
+                Text="通知に常駐させる"
+                TextColor="White" />
+
             <!--  読み込みボタン (必要に応じて自動読み込みに切り替えてもOKです)  -->
             <Button
                 Margin="0,10,0,0"
