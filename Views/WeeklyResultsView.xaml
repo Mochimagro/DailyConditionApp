@@ -48,11 +48,11 @@
                                     TextColor="#AAAAAA"
                                     VerticalOptions="Center" />
 
-                                <!--  スコア (DisplayScore と ScoreColor を使用)  -->
+                                <!--  スコア (CoefficientedScore と ScoreColor を使用)  -->
                                 <Label
                                     Grid.Column="2"
                                     FontAttributes="Bold"
-                                    Text="{Binding DisplayScore}"
+                                    Text="{Binding CoefficientedScore}"
                                     TextColor="{Binding ScoreColor}"
                                     VerticalOptions="Center" />
                             </Grid>

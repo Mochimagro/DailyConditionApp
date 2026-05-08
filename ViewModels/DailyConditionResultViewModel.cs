@@ -14,9 +14,12 @@ namespace DailyConditionApp.ViewModels
         private readonly INotionService _notionService;
         private readonly ISettingsService _settingsService;
 
+        [ObservableProperty] private Visibility _isLoadedConditionScore = Visibility.Hidden;
+
         [ObservableProperty] private string _environmentScoreText = "--";
         [ObservableProperty] private string _conditionCommentText = "読み込み中...";
 
+        // 表示用（0〜100 の整数値）
         [ObservableProperty] private int _sleepScore;
         [ObservableProperty] private int _pressureScore;
         [ObservableProperty] private int _weatherScore;
@@ -26,6 +29,8 @@ namespace DailyConditionApp.ViewModels
         {
             _notionService = notionService;
             _settingsService = settingsService;
+
+            IsLoadedConditionScore = Visibility.Hidden;
         }
 
         [RelayCommand]
@@ -45,16 +50,19 @@ namespace DailyConditionApp.ViewModels
                 {
                     EnvironmentScoreText = Math.Ceiling(result.EnvironmentScore).ToString();
                     ConditionCommentText = result.ConditionComment;
+                    IsLoadedConditionScore = Visibility.Hidden;
 
                     // 各スコアは Notion から取得した数値を小数点切り上げで表示
-                    SleepScore = (int)Math.Ceiling(result.SleepScore);
-                    PressureScore = (int)Math.Ceiling(result.PressureScore);
-                    WeatherScore = (int)Math.Ceiling(result.WeatherScore);
-                    WindScore = (int)Math.Ceiling(result.WindScore);
+                    SleepScore = (int)(result.SleepCoefficient * 100);
+                    PressureScore = (int)(result.PressureCoefficient * 100);
+                    WeatherScore = (int)(result.WeatherCoefficient * 100);
+                    WindScore = (int)(result.WindCoefficient * 100);
                 }
                 else
                 {
                     ConditionCommentText = "本日のデータはまだ登録されていません。";
+                    IsLoadedConditionScore = Visibility.Hidden;
+
                     // スコアはデフォルト 0 に戻す（任意）
                     SleepScore = 0;
                     PressureScore = 0;

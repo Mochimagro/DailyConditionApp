@@ -60,6 +60,7 @@ namespace DailyConditionApp.Services
                     return false;
                 }).ToList();
 
+                /*
                 // 2. 気圧差の平均を計算
                 double totalDiff = 0;
                 int count = 0;
@@ -77,6 +78,23 @@ namespace DailyConditionApp.Services
                 // 平均階差（9時から18時までだと9個の差分データができるはず）
                 double avgPressureDiff = count > 0 ? Math.Round(totalDiff / count, 2) : 0;
 
+                */
+
+                // 2. 当日の最大気圧差を算出
+                double maxDiff = 0;
+
+                for (int i = 1; i < targetHours.Count; i++)
+                {
+                    double prevPressure = targetHours[i - 1].GetProperty("pressure_mb").GetDouble();
+                    double currentPressure = targetHours[i].GetProperty("pressure_mb").GetDouble();
+                    // 1時間ごとの変動量（絶対値）を計算
+                    double diff = Math.Abs(currentPressure - prevPressure);
+                    if (diff > maxDiff)
+                    {
+                        maxDiff = diff;
+                    }
+                }
+
                 // 残りのロジックは流用
                 int code = current.GetProperty("condition").GetProperty("code").GetInt32();
                 int cloud = current.GetProperty("cloud").GetInt32();
@@ -86,8 +104,9 @@ namespace DailyConditionApp.Services
                 {
                     Description = current.GetProperty("condition").GetProperty("text").GetString() ?? "",
                     Pressure = current.GetProperty("pressure_mb").GetDouble(), // 現在の気圧
-                    AvgPressureDiff = avgPressureDiff, // ★算出値
-                    WindSpeed = current.GetProperty("wind_kph").GetDouble(),
+                    AvgPressureDiff = maxDiff, // ★算出値
+                    WindSpeed = Math.Round((current.GetProperty("wind_kph").GetDouble() / 3.6) * 10) / 10,
+                    // WindSpeed = current.GetProperty("wind_kph").GetDouble(),
                     CustomStatus = InterpretWeatherCondition(code, cloud, precip)
                 };
             }

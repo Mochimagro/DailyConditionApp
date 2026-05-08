@@ -16,6 +16,7 @@
             <Grid
                 ColumnDefinitions="Auto, Auto,*"
                 ColumnSpacing="10"
+                IsVisible="{Binding IsLoadedConditionScore}"
                 RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                 RowSpacing="10">
                 <!--  環境スコア  -->
@@ -56,21 +57,21 @@
                     Text="{Binding ConditionCommentText}"
                     TextColor="White" />
 
-                <!--  各スコア  -->
+                <!--  各係数  -->
                 <Label
                     Grid.Row="2"
                     Grid.ColumnSpan="3"
                     FontSize="Header"
                     HorizontalOptions="Center"
-                    Text="-- 各スコア詳細 --"
+                    Text="-- 各係数詳細 --"
                     TextColor="White" />
 
-                <!--  睡眠スコア  -->
+                <!--  睡眠係数  -->
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    Text="睡眠:"
+                    Text="睡眠係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
@@ -85,17 +86,17 @@
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/50"
+                        Text="/100"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
 
-                <!--  気圧差スコア  -->
+                <!--  気圧差係数  -->
                 <Label
                     Grid.Row="4"
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    Text="気圧差:"
+                    Text="気圧差係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
@@ -110,17 +111,17 @@
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/30"
+                        Text="/100"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
 
-                <!--  天気スコア  -->
+                <!--  天気係数  -->
                 <Label
                     Grid.Row="5"
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    Text="天気:"
+                    Text="天気係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
@@ -135,17 +136,17 @@
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/15"
+                        Text="/100"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
 
-                <!--  風速スコア  -->
+                <!--  風速係数  -->
                 <Label
                     Grid.Row="6"
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    Text="風速:"
+                    Text="風速係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
@@ -160,7 +161,7 @@
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/5"
+                        Text="/100"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>

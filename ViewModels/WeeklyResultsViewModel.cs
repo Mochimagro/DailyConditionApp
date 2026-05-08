@@ -53,7 +53,8 @@ namespace DailyConditionApp.ViewModels
                     completeWeeklyData.Add(new SleepScoreItem
                     {
                         Date = targetDate,
-                        Score = matchedItem?.Score // データがあればScoreを入れ、なければnull
+                        Score = matchedItem?.Score, // データがあればScoreを入れ、なければnull
+                        Coefficient = matchedItem?.Coefficient
                     });
                 }
 
