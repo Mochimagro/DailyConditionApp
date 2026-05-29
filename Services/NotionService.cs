@@ -12,7 +12,7 @@ namespace DailyConditionApp.Services
     public record DailyLogData(
     string Date, // "yyyy-MM-dd"
     double SleepTime,
-    double SleepEfficiency,
+    double NonRemRate,
     string WeatherLabel,
     double PressureDiff,
     double WindSpeed,
@@ -39,7 +39,7 @@ namespace DailyConditionApp.Services
                 ["名前"] = new { title = new[] { new { text = new { content = $"{logData.Date} のログ" } } } },
                 ["日付"] = new { date = new { start = logData.Date } },
                 ["睡眠時間(h)"] = new { number = logData.SleepTime },
-                ["睡眠効率"] = new { number = logData.SleepEfficiency },
+                ["ノンレム率"] = new { number = logData.NonRemRate },
                 ["天気"] = new { select = new { name = logData.WeatherLabel } },
                 ["当日気圧差"] = new { number = logData.PressureDiff },
                 ["風速(m/s)"] = new { number = logData.WindSpeed }
@@ -220,13 +220,14 @@ namespace DailyConditionApp.Services
 
                     if (DateTime.TryParse(dateStr, out DateTime parsedDate))
                     {
-                        int? parsedScore = (int?)scoreStr;
+                        // ExtractNotionNumber はデフォルトで 0 を返すため、0 の場合はデータなしとみなす
+                        int? parsedScore = scoreStr > 0 ? (int?)Math.Round(scoreStr) : null;
 
                         resultsList.Add(new SleepScoreItem
                         {
                             Date = parsedDate.Date,
                             Score = parsedScore,
-                            Coefficient = coefficientStr
+                            Coefficient = coefficientStr > 0 ? coefficientStr : null
                         });
                     }
                 }

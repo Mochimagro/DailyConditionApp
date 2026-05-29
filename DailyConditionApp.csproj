@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>DailyConditionApp</ApplicationTitle>
+		<ApplicationTitle>環境コンディション確認</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.dailyconditionapp</ApplicationId>
@@ -32,6 +32,9 @@
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
+
+		<!-- apkを出力するための設定を追加 -->
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>

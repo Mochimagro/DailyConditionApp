@@ -31,8 +31,8 @@
                 </HorizontalStackLayout>
 
 
-                <Label Text="睡眠効率（％）" />
-                <Picker ItemsSource="{Binding PickerPerNumberItems}" SelectedItem="{Binding SleepEfficiency, Mode=TwoWay}" />
+                <Label Text="ノンレム率（％）" />
+                <Picker ItemsSource="{Binding PickerPerNumberItems}" SelectedItem="{Binding NonRemRate, Mode=TwoWay}" />
 
                 <Label Text="天気" />
                 <Picker

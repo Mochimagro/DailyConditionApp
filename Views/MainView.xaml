@@ -14,6 +14,22 @@
 
         <views:DailyConditionResultView x:Name="ResultView" />
 
+        <VerticalStackLayout Spacing="6">
+            <Label
+                FontSize="18"
+                HorizontalOptions="Center"
+                TextColor="White"
+                Text="{Binding BindingContext.AverageSleepScoreText, Source={x:Reference ResultView}}"
+                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}" />
+
+            <ProgressBar
+                HeightRequest="16"
+                Progress="{Binding BindingContext.AverageSleepScoreProgress, Source={x:Reference ResultView}}"
+                ProgressColor="{Binding BindingContext.AverageSleepScoreColor, Source={x:Reference ResultView}}"
+                BackgroundColor="#333333"
+                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}" />
+        </VerticalStackLayout>
+
         <Button Command="{Binding GoToDailyInputCommand}" Text="今日のコンディションを入力する" />
 
 

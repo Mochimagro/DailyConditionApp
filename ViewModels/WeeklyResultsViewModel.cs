@@ -19,6 +19,10 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<SleepScoreItem> _weeklyScores = new();
 
+        // チェックしたアイテムの平均表示用テキスト
+        [ObservableProperty]
+        private string _checkedAverageText = "--";
+
         // コンストラクタでServiceを受け取るように修正
         public WeeklyResultsViewModel(INotionService notionService, ISettingsService settingsService)
         {
@@ -53,8 +57,9 @@ namespace DailyConditionApp.ViewModels
                     completeWeeklyData.Add(new SleepScoreItem
                     {
                         Date = targetDate,
-                        Score = matchedItem?.Score, // データがあればScoreを入れ、なければnull
-                        Coefficient = matchedItem?.Coefficient
+                        // Score = matchedItem?.Score, // データがあればScoreを入れ、なければnull
+                        Coefficient = matchedItem?.Coefficient,
+                        IsChecked = false // 初期は未チェック
                     });
                 }
 
@@ -72,6 +77,20 @@ namespace DailyConditionApp.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        [RelayCommand]
+        public void CalculateCheckedAverage()
+        {
+            var selected = WeeklyScores.Where(w => w.IsChecked && w.Score.HasValue).Select(w => w.Score.Value).ToList();
+            if (selected == null || selected.Count == 0)
+            {
+                CheckedAverageText = "--";
+                return;
+            }
+
+            var avg = (int)Math.Round(selected.Average());
+            CheckedAverageText = $"平均: {avg} 点 ({selected.Count} 件)";
         }
     }
 }

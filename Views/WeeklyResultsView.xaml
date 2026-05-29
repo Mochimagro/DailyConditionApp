@@ -3,69 +3,66 @@
     x:Class="DailyConditionApp.Views.WeeklyResultsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:models="clr-namespace:DailyConditionApp.Models"
-    Title="WeeklyResultsView">
-    <Border Padding="20" BackgroundColor="#1E1E1E">
-        <VerticalStackLayout Spacing="15">
+    xmlns:converters="clr-namespace:DailyConditionApp.Converters"
+    Title="週間睡眠スコア">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ScoreToHeightConverter x:Key="ScoreToHeightConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-            <Grid ColumnDefinitions="*, Auto">
-                <Label
-                    Grid.Column="0"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    Text="過去1週間の睡眠スコア"
-                    TextColor="White"
-                    VerticalOptions="Center" />
-                <Button
-                    Grid.Column="1"
-                    Padding="10,0"
-                    Command="{Binding LoadWeeklyDataCommand}"
-                    FontSize="12"
-                    HeightRequest="35"
-                    Text="更新" />
-            </Grid>
+    <VerticalStackLayout Padding="12" Spacing="10">
 
-            <BoxView
-                Margin="0,5"
-                HeightRequest="1"
-                Color="#444" />
+        <CollectionView ItemsSource="{Binding WeeklyScores}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="40,*,80" RowDefinitions="Auto">
+                        <CheckBox
+                            HorizontalOptions="Center"
+                            IsChecked="{Binding IsChecked}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding FormattedDate}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="2"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding DisplayScore}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding WeeklyScores}" Spacing="8">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="models:SleepScoreItem">
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Button Command="{Binding CalculateCheckedAverageCommand}" Text="選択平均を計算" />
+            <Label Text="{Binding CheckedAverageText}" VerticalOptions="Center" />
+        </HorizontalStackLayout>
 
-                        <Frame
-                            Padding="15,10"
-                            BackgroundColor="#2C2C2C"
-                            BorderColor="Transparent"
-                            CornerRadius="8"
-                            HasShadow="False">
-                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                <!--  日付  -->
-                                <Label
-                                    Grid.Column="0"
-                                    Text="{Binding FormattedDate}"
-                                    TextColor="#AAAAAA"
-                                    VerticalOptions="Center" />
 
-                                <!--  スコア (CoefficientedScore と ScoreColor を使用)  -->
-                                <Label
-                                    Grid.Column="2"
-                                    FontAttributes="Bold"
-                                    Text="{Binding CoefficientedScore}"
-                                    TextColor="{Binding ScoreColor}"
-                                    VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
+        <!--  簡易棒グラフ  -->
+        <CollectionView ItemsSource="{Binding WeeklyScores}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="8" Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout HorizontalOptions="Center" WidthRequest="40">
+                        <BoxView
+                            HeightRequest="{Binding Score, Converter={StaticResource ScoreToHeightConverter}}"
+                            SemanticProperties.HeadingLevel="Level3"
+                            VerticalOptions="End"
+                            WidthRequest="28"
+                            Color="{Binding ScoreColor}" />
+                        <Label
+                            FontSize="10"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Date, StringFormat='{0:dd}'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
-
-            <ActivityIndicator
-                HorizontalOptions="Center"
-                IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}" />
-        </VerticalStackLayout>
-    </Border>
+    </VerticalStackLayout>
 </ContentPage>

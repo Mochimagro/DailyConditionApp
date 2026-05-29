@@ -32,7 +32,7 @@ namespace DailyConditionApp.ViewModels
         private int _sleepMinute;
 
         [ObservableProperty]
-        private int _sleepEfficiency = 100;
+        private int _nonRemRate = 30;
 
         [ObservableProperty]
         private string _weather;
@@ -55,7 +55,7 @@ namespace DailyConditionApp.ViewModels
 
             Date = DateTime.Now.ToString("yyyy-MM-dd");
 
-            PickerPerNumberItems = new ObservableCollection<int>(Enumerable.Range(0, 101).Reverse()); // 1~100の選択肢を用意
+            PickerPerNumberItems = new ObservableCollection<int>(Enumerable.Range(0, 51).Reverse()); // 0~50の選択肢を用意
 
             // 初期値を SleepTime から同期
             SleepHour = SleepTime.Hours;
@@ -161,9 +161,9 @@ namespace DailyConditionApp.ViewModels
                 // 3. Notionに送るデータを用意
                 var logData = new DailyLogData(
                     Date: DateTime.Now.ToString("yyyy-MM-dd"), // 日本時間で取得する場合は調整が必要
-                    WeatherLabel: Weather,
                     SleepTime: SleepTime.TotalHours, // TimeSpanを時間数に変換
-                    SleepEfficiency:(double)SleepEfficiency / 100,
+                    NonRemRate: (double)NonRemRate / 100,
+                    WeatherLabel: Weather,
                     PressureDiff: pressureDiff,
                     WindSpeed: windSpeed
                 // RelatedPageId: "取得したIDがあればここに入れる"
@@ -180,13 +180,8 @@ namespace DailyConditionApp.ViewModels
                     // ※ AppShellにルート登録されている必要があります
                     await Shell.Current.GoToAsync("PostedDailyView");
 
-                    // 2. ResultViewModelを解決して最新スコアを読み込む
-                    if (MauiProgram.CurrentServiceProvider != null)
-                    {
-                        var resultVm = MauiProgram.CurrentServiceProvider.GetService<DailyConditionResultViewModel>();
-                        // 非同期コマンドを待機せずに実行（または await resultVm.LoadResultAsync()）
-                        _ = resultVm?.LoadResultAsync();
-                    }
+                    // PostedDailyView 側 (DailyConditionResultView) がロード時に Notion からデータを取得し、
+                    // 取得完了後に通知を表示するように変更したため、ここでは何もしない。
                 }
                 else
                 {

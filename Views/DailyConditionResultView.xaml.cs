@@ -10,7 +10,7 @@ public partial class DailyConditionResultView : ContentView
         this.Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
+    private async void OnLoaded(object? sender, EventArgs e)
     {
         if (BindingContext is DailyConditionResultViewModel) return;
 
@@ -19,10 +19,14 @@ public partial class DailyConditionResultView : ContentView
             var vm = MauiProgram.CurrentServiceProvider.GetService<DailyConditionResultViewModel>();
             BindingContext = vm;
 
-            // 配置されたタイミングで自動的にNotionへデータを読み込みに行く
+            // 配置されたタイミングで自動的にNotionへデータを読み込みに行き、読み込み完了後に通知を表示
             if (vm != null && vm.EnvironmentScoreText == "--")
             {
-                vm.LoadResultCommand.Execute(null);
+                await vm.LoadResultAsync();
+                if (vm.HasTodayData)
+                {
+                    vm.PushScoreNotificationCommand?.Execute(null);
+                }
             }
         }
     }

@@ -16,7 +16,6 @@
             <Grid
                 ColumnDefinitions="Auto, Auto,*"
                 ColumnSpacing="10"
-                IsVisible="{Binding IsLoadedConditionScore}"
                 RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                 RowSpacing="10">
                 <!--  環境スコア  -->
@@ -24,10 +23,14 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     HorizontalOptions="End"
+                    IsVisible="{Binding HasTodayData}"
                     Text="環境スコア:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
-                <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    IsVisible="{Binding HasTodayData}">
                     <Label
                         FontAttributes="Bold"
                         FontSize="48"
@@ -57,26 +60,29 @@
                     Text="{Binding ConditionCommentText}"
                     TextColor="White" />
 
-                <!--  各係数  -->
+                <!--  内約  -->
                 <Label
                     Grid.Row="2"
                     Grid.ColumnSpan="3"
                     FontSize="Header"
                     HorizontalOptions="Center"
-                    Text="-- 各係数詳細 --"
+                    IsVisible="{Binding HasTodayData}"
+                    Text="-- 内約 --"
                     TextColor="White" />
 
-                <!--  睡眠係数  -->
+                <!--  睡眠スコア  -->
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    Text="睡眠係数:"
+                    IsVisible="{Binding HasTodayData}"
+                    Text="睡眠スコア:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
                     Grid.Row="3"
                     Grid.Column="1"
+                    IsVisible="{Binding HasTodayData}"
                     Spacing="20">
                     <Label
                         FontSize="Body"
@@ -96,22 +102,24 @@
                     Grid.Row="4"
                     Grid.Column="0"
                     HorizontalOptions="End"
+                    IsVisible="{Binding HasTodayData}"
                     Text="気圧差係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
                     Grid.Row="4"
                     Grid.Column="1"
+                    IsVisible="{Binding HasTodayData}"
                     Spacing="20">
                     <Label
                         FontSize="Body"
                         LineBreakMode="WordWrap"
-                        Text="{Binding PressureScore}"
+                        Text="{Binding PressureCoefficient, StringFormat='{}{0:F1}'}"
                         TextColor="White" />
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/100"
+                        Text="/1.0"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
@@ -121,22 +129,24 @@
                     Grid.Row="5"
                     Grid.Column="0"
                     HorizontalOptions="End"
+                    IsVisible="{Binding HasTodayData}"
                     Text="天気係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
                     Grid.Row="5"
                     Grid.Column="1"
+                    IsVisible="{Binding HasTodayData}"
                     Spacing="20">
                     <Label
                         FontSize="Body"
                         LineBreakMode="WordWrap"
-                        Text="{Binding WeatherScore}"
+                        Text="{Binding WeatherCoefficient, StringFormat='{}{0:F1}'}"
                         TextColor="White" />
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/100"
+                        Text="/1.0"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
@@ -146,22 +156,24 @@
                     Grid.Row="6"
                     Grid.Column="0"
                     HorizontalOptions="End"
+                    IsVisible="{Binding HasTodayData}"
                     Text="風速係数:"
                     TextColor="#AAAAAA"
                     VerticalOptions="End" />
                 <HorizontalStackLayout
                     Grid.Row="6"
                     Grid.Column="1"
+                    IsVisible="{Binding HasTodayData}"
                     Spacing="20">
                     <Label
                         FontSize="Body"
                         LineBreakMode="WordWrap"
-                        Text="{Binding WindScore}"
+                        Text="{Binding WindCoefficient, StringFormat='{}{0:F1}'}"
                         TextColor="White" />
 
                     <Label
                         HorizontalOptions="End"
-                        Text="/100"
+                        Text="/1.0"
                         TextColor="#AAAAAA"
                         VerticalOptions="End" />
                 </HorizontalStackLayout>
