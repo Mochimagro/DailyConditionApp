@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\viewmodels\\weeklyresultsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:viewmodels\\weeklyresultsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\views\\weeklyresultsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:views\\weeklyresultsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\controls\\custombarchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:controls\\custombarchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\viewmodels\\dailyconditionresultviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:viewmodels\\dailyconditionresultviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\views\\posteddailyview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:views\\posteddailyview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\views\\settingsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:views\\settingsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\services\\isettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:services\\isettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|d:\\documents\\visual studio 2022\\projects\\dailyconditionapp\\services\\settingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AAC0D2F-8002-4B67-8D2C-1504A0D3DCA2}|DailyConditionApp.csproj|solutionrelative:services\\settingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,66 +47,105 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CustomBarChart.cs",
-              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Controls\\CustomBarChart.cs",
-              "RelativeDocumentMoniker": "Controls\\CustomBarChart.cs",
-              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Controls\\CustomBarChart.cs",
-              "RelativeToolTip": "Controls\\CustomBarChart.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T06:59:30.293Z",
+              "WhenOpened": "2026-05-31T09:05:28.976Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "WeeklyResultsView.xaml",
-              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\WeeklyResultsView.xaml",
-              "RelativeDocumentMoniker": "Views\\WeeklyResultsView.xaml",
-              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\WeeklyResultsView.xaml",
-              "RelativeToolTip": "Views\\WeeklyResultsView.xaml",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAIAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-31T06:45:43.674Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "WeeklyResultsViewModel.cs",
-              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\WeeklyResultsViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\WeeklyResultsViewModel.cs",
-              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\WeeklyResultsViewModel.cs",
-              "RelativeToolTip": "ViewModels\\WeeklyResultsViewModel.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAArwGkAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T06:45:41.85Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MauiProgram.cs",
-              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\MauiProgram.cs",
-              "RelativeDocumentMoniker": "MauiProgram.cs",
-              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\MauiProgram.cs",
-              "RelativeToolTip": "MauiProgram.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T06:43:48.662Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "MainView.xaml",
               "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\MainView.xaml",
               "RelativeDocumentMoniker": "Views\\MainView.xaml",
               "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\MainView.xaml",
               "RelativeToolTip": "Views\\MainView.xaml",
-              "ViewState": "AgIAAAMAAAAAAAAAAEBRwB0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAADwvw4AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-24T02:32:01.553Z",
+              "WhenOpened": "2026-05-31T09:04:46.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DailyConditionResultViewModel.cs",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\DailyConditionResultViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DailyConditionResultViewModel.cs",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\DailyConditionResultViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DailyConditionResultViewModel.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAArwMUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-31T08:40:52.239Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SettingsViewModel.cs",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\SettingsViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\SettingsViewModel.cs",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\ViewModels\\SettingsViewModel.cs",
+              "RelativeToolTip": "ViewModels\\SettingsViewModel.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-31T08:31:48.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SettingsService.cs",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Services\\SettingsService.cs",
+              "RelativeDocumentMoniker": "Services\\SettingsService.cs",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Services\\SettingsService.cs",
+              "RelativeToolTip": "Services\\SettingsService.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAawGcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-31T08:31:43.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ISettingsService.cs",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Services\\ISettingsService.cs",
+              "RelativeDocumentMoniker": "Services\\ISettingsService.cs",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Services\\ISettingsService.cs",
+              "RelativeToolTip": "Services\\ISettingsService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAjwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-31T08:31:40.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SettingsView.xaml",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\SettingsView.xaml",
+              "RelativeDocumentMoniker": "Views\\SettingsView.xaml",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\SettingsView.xaml",
+              "RelativeToolTip": "Views\\SettingsView.xaml",
+              "ViewState": "AgIAAEEAAAAAAAAAAAArwEYAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-31T08:30:13.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PostedDailyView.xaml",
+              "DocumentMoniker": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\PostedDailyView.xaml",
+              "RelativeDocumentMoniker": "Views\\PostedDailyView.xaml",
+              "ToolTip": "D:\\Documents\\Visual Studio 2022\\Projects\\DailyConditionApp\\Views\\PostedDailyView.xaml",
+              "RelativeToolTip": "Views\\PostedDailyView.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-31T08:29:28.955Z",
               "EditorCaption": ""
             }
           ]

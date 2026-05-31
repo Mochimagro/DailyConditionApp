@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +14,11 @@ namespace DailyConditionApp.ViewModels
     {
         private readonly INotionService _notionService;
         private readonly ISettingsService _settingsService;
+        private readonly IDialogService _dialogService;
 
         [ObservableProperty] private string _environmentScoreText = "--";
         [ObservableProperty] private string _conditionCommentText = "読み込み中...";
+        [ObservableProperty] private bool _isRewardAvailable;
 
         // 表示用（0〜100 の整数値）
         [ObservableProperty] private int _sleepScore;
@@ -68,11 +69,11 @@ namespace DailyConditionApp.ViewModels
         // 当日の Notion データが存在するか（表示制御用）
         [ObservableProperty] private bool _hasTodayData = false;
 
-        public DailyConditionResultViewModel(INotionService notionService, ISettingsService settingsService)
+        public DailyConditionResultViewModel(INotionService notionService, ISettingsService settingsService, IDialogService dialogService)
         {
             _notionService = notionService;
             _settingsService = settingsService;
-
+            _dialogService = dialogService;
         }
 
         [RelayCommand]
@@ -110,6 +111,16 @@ namespace DailyConditionApp.ViewModels
                     {
                         AverageSleepScoreText = "";
                     }
+
+                    // ご褒美判定（UI 表示用フラグの更新）
+                    try
+                    {
+                        await CheckRewardAndNotifyAsync(notionSettings.token, notionSettings.databaseId);
+                    }
+                    catch
+                    {
+                        // ignore
+                    }
                 }
                 else
                 {
@@ -124,6 +135,7 @@ namespace DailyConditionApp.ViewModels
                     WeatherCoefficient = 0;
                     WindCoefficient = 0;
                     AverageSleepScoreText = "";
+                    IsRewardAvailable = false;
                 }
             }
             finally
@@ -163,6 +175,40 @@ namespace DailyConditionApp.ViewModels
             {
                 AverageSleepScoreText = "";
                 AverageSleepScoreValue = 0;
+            }
+        }
+
+        private async Task CheckRewardAndNotifyAsync(string token, string databaseId)
+        {
+            try
+            {
+                var list = await _notionService.GetWeeklySleepScoresAsync(token, databaseId);
+
+                var scores = list.Select(x => x.Score).Where(s => s.HasValue).Select(s => s.Value).ToList();
+                if (scores.Count == 0)
+                {
+                    IsRewardAvailable = false;
+                    return;
+                }
+
+                var avg = (int)Math.Round(scores.Average());
+                var rewardDays = await _settingsService.LoadRewardDaysAsync();
+                var todayInt = (int)DateTime.Now.DayOfWeek;
+
+                if (rewardDays.Contains(todayInt) && avg >= 80)
+                {
+                    IsRewardAvailable = true;
+                    // トースト通知
+                    // await _dialogService.ShowToastAsync("合格日");
+                }
+                else
+                {
+                    IsRewardAvailable = false;
+                }
+            }
+            catch
+            {
+                IsRewardAvailable = false;
             }
         }
 

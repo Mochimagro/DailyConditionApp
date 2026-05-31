@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using Microsoft.Maui.Storage;
+using System.Collections.Generic;
 using DailyConditionApp.Models;
 
 namespace DailyConditionApp.Services
@@ -66,6 +68,40 @@ namespace DailyConditionApp.Services
             {
                 return (string.Empty, string.Empty, string.Empty);
             }
+        }
+
+        private const string PrefKey_RewardDays = "RewardDays";
+
+        public Task SaveRewardDaysAsync(IEnumerable<int> days)
+        {
+            try
+            {
+                // シンプルにJSONで保存
+                var json = JsonSerializer.Serialize(days);
+                Preferences.Default.Set(PrefKey_RewardDays, json);
+            }
+            catch (Exception)
+            {
+                // 例外は無視しておく
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task<List<int>> LoadRewardDaysAsync()
+        {
+            try
+            {
+                var json = Preferences.Default.Get(PrefKey_RewardDays, string.Empty);
+                if (string.IsNullOrWhiteSpace(json)) return Task.FromResult(new List<int>());
+                var list = JsonSerializer.Deserialize<List<int>>(json);
+                return Task.FromResult(list ?? new List<int>());
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(new List<int>());
+            }
+        
         }
     }
 }

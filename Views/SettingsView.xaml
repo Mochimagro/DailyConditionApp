@@ -37,6 +37,42 @@
             Keyboard="Numeric"
             Placeholder="経度 (Longitude)"
             Text="{Binding Longitude}" />
+        <!-- ご褒美曜日 -->
+        <Label
+            Margin="0,14,0,0"
+            FontAttributes="Bold"
+            Text="ご褒美曜日" />
+
+        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="8">
+            <VerticalStackLayout Grid.Column="0"  Spacing="4">
+                <CheckBox IsChecked="{Binding SundayChecked}" />
+                <Label Text="日" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                <CheckBox IsChecked="{Binding MondayChecked}" />
+                <Label Text="月" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="2" Spacing="4">
+                <CheckBox IsChecked="{Binding TuesdayChecked}" />
+                <Label Text="火" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="3" Spacing="4">
+                <CheckBox IsChecked="{Binding WednesdayChecked}" />
+                <Label Text="水" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="4" Spacing="4">
+                <CheckBox IsChecked="{Binding ThursdayChecked}" />
+                <Label Text="木" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="5" Spacing="4">
+                <CheckBox IsChecked="{Binding FridayChecked}" />
+                <Label Text="金" VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="6" Spacing="4">
+                <CheckBox IsChecked="{Binding SaturdayChecked}" />
+                <Label Text="土" VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
 
         <!--  保存ボタン  -->
         <HorizontalStackLayout HorizontalOptions="End">

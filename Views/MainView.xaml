@@ -28,6 +28,13 @@
                 ProgressColor="{Binding BindingContext.AverageSleepScoreColor, Source={x:Reference ResultView}}"
                 BackgroundColor="#333333"
                 IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}" />
+
+            <Label
+                FontSize="16"
+                HorizontalOptions="Center"
+                TextColor="#FFD54F"
+                Text="ご褒美可能！！"
+                IsVisible="{Binding BindingContext.IsRewardAvailable, Source={x:Reference ResultView}}" />
         </VerticalStackLayout>
 
         <Button Command="{Binding GoToDailyInputCommand}" Text="今日のコンディションを入力する" />

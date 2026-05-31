@@ -13,5 +13,7 @@ namespace DailyConditionApp.Services
 
         Task SaveWeatherSettingsAsync(string apiKey, string lat, string lon);
         Task<(string ApiKey, string Lat, string Lon)> LoadWeatherSettingsAsync();
+        Task SaveRewardDaysAsync(IEnumerable<int> days);
+        Task<List<int>> LoadRewardDaysAsync();
     }
 }
