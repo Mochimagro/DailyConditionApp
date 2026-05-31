@@ -4,6 +4,7 @@ using DailyConditionApp.Services;
 using DailyConditionApp.ViewModels;
 using DailyConditionApp.Views;
 using DailyConditionApp.Views.Controls;
+using Microcharts.Maui;
 
 public static class MauiProgram
 {
@@ -13,6 +14,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMicrocharts()
             // Initialize the .NET MAUI Community Toolkit by adding the below line of code
             .UseMauiCommunityToolkit()
             // After initializing the .NET MAUI Community Toolkit, optionally add additional fonts

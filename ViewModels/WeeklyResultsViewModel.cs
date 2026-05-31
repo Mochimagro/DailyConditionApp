@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using DailyConditionApp.Models;
 using DailyConditionApp.Services;
+using Microcharts;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +20,9 @@ namespace DailyConditionApp.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<SleepScoreItem> _weeklyScores = new();
+
+        [ObservableProperty]
+        private Chart _weeklyChart;
 
         // チェックしたアイテムの平均表示用テキスト
         [ObservableProperty]
@@ -70,6 +75,42 @@ namespace DailyConditionApp.ViewModels
                     foreach (var item in completeWeeklyData)
                     {
                         WeeklyScores.Add(item);
+                    }
+
+                    // Microcharts 用の BarChart を作成
+                    try
+                    {
+                        var ordered = completeWeeklyData.OrderBy(d => d.Date).ToList();
+                        var entries = ordered.Select(i =>
+                        {
+                            var score = i.Score ?? 0;
+                            // 80以上を水色 ("#03A9F4"), 80未満を灰色 ("#9E9E9E") に変更
+                            var color = score >= 80 ? SKColor.Parse("#03A9F4") : SKColor.Parse("#9E9E9E");
+                            var entry = new ChartEntry((float)score)
+                            {
+                                Label = i.Date.ToString("MM/dd"),
+                                ValueLabel = score.ToString(),
+                                Color = color
+                            };
+                            return entry;
+                        }).ToArray();
+
+                        // カスタムの BarChart を使って、80点のラインを描画し、値テキストを棒の上部に表示する
+                        WeeklyChart = new DailyConditionApp.Controls.CustomBarChart
+                        {
+                            Entries = entries,
+                            MaxValue = 100,
+                            MinValue = 0,
+                            LabelTextSize = 18,
+                            // 背景を少し暗めにして棒とのコントラストを上げる
+                            BackgroundColor = SKColor.Parse("#EFEFEF"),
+                            Threshold = 80f,
+                            // ThresholdColor = SKColors.White
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"WeeklyResultsViewModel: chart init error: {ex}");
                     }
                 });
             }
