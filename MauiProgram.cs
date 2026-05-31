@@ -4,7 +4,6 @@ using DailyConditionApp.Services;
 using DailyConditionApp.ViewModels;
 using DailyConditionApp.Views;
 using DailyConditionApp.Views.Controls;
-using LiveChartsCore.SkiaSharpView.Maui;
 
 public static class MauiProgram
 {
@@ -15,7 +14,6 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             // Initialize the .NET MAUI Community Toolkit by adding the below line of code
-            .UseLiveCharts()
             .UseMauiCommunityToolkit()
             // After initializing the .NET MAUI Community Toolkit, optionally add additional fonts
             .ConfigureFonts(fonts =>

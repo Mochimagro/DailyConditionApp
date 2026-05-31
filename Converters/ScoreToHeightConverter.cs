@@ -6,11 +6,8 @@ namespace DailyConditionApp.Converters
 {
     public class ScoreToHeightConverter : IValueConverter
     {
-        // Map score range 0..100 to exact pixel height in the chart area.
-        // Set MinHeight to 0 so a score of 0 renders at the baseline.
-        // Set MaxHeight to 200 to match the chart area HeightRequest in XAML.
-        public double MinHeight { get; set; } = 0;
-        public double MaxHeight { get; set; } = 200;
+        public double MinHeight { get; set; } = 8;
+        public double MaxHeight { get; set; } = 140;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

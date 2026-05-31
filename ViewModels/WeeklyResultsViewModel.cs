@@ -1,11 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
-using LiveChartsCore.Measure;
 using DailyConditionApp.Models;
 using DailyConditionApp.Services;
 using System;
@@ -24,15 +18,6 @@ namespace DailyConditionApp.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<SleepScoreItem> _weeklyScores = new();
-
-        [ObservableProperty]
-        private ISeries[] _series = Array.Empty<ISeries>();
-
-        [ObservableProperty]
-        private Axis[] _xAxes = Array.Empty<Axis>();
-
-        [ObservableProperty]
-        private Axis[] _yAxes = Array.Empty<Axis>();
 
         // チェックしたアイテムの平均表示用テキスト
         [ObservableProperty]
@@ -86,40 +71,6 @@ namespace DailyConditionApp.ViewModels
                     {
                         WeeklyScores.Add(item);
                     }
-
-                    // LiveChartsCore 用のシリーズと軸を用意する
-                    var ordered = completeWeeklyData.OrderBy(d => d.Date).ToList();
-                    var values = ordered.Select(i => (double)(i.Score ?? 0)).ToArray();
-                    var labels = ordered.Select(i => i.Date.ToString("MM/dd")).ToArray();
-
-                    Series = new ISeries[]
-                    {
-                        new ColumnSeries<double>
-                        {
-                            Values = values,
-                            ShowDataLabels = true,
-                            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
-                            // column fill will be determined by individual items in model if needed; using default color here
-                            Fill = new SolidColorPaint(SKColor.Parse("#42A5F5"))
-                        },
-                        // 80点ラインを描画するためのライン系列
-                        new LineSeries<double>
-                        {
-                            Values = Enumerable.Repeat(80.0, values.Length).ToArray(),
-                            Stroke = new SolidColorPaint(SKColors.OrangeRed, 2),
-                            GeometrySize = 0
-                        }
-                    };
-
-                    XAxes = new Axis[]
-                    {
-                        new Axis { Labels = labels }
-                    };
-
-                    YAxes = new Axis[]
-                    {
-                        new Axis { MinLimit = 0, MaxLimit = 100 }
-                    };
                 });
             }
             finally

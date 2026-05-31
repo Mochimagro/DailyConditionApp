@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:DailyConditionApp.Converters"
-    xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
     Title="週間睡眠スコア">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -42,14 +41,28 @@
         </HorizontalStackLayout>
 
 
-        <!-- LiveChartsCore を使った棒グラフ表示 -->
-        <Grid>
-            <lvc:CartesianChart Series="{Binding Series}"
-                               XAxes="{Binding XAxes}"
-                               YAxes="{Binding YAxes}"
-                               HeightRequest="260"
-                               LegendPosition="Hidden" />
-        </Grid>
+        <!--  簡易棒グラフ  -->
+        <CollectionView ItemsSource="{Binding WeeklyScores}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="8" Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout HorizontalOptions="Center" WidthRequest="40">
+                        <BoxView
+                            HeightRequest="{Binding Score, Converter={StaticResource ScoreToHeightConverter}}"
+                            SemanticProperties.HeadingLevel="Level3"
+                            VerticalOptions="End"
+                            WidthRequest="28"
+                            Color="{Binding ScoreColor}" />
+                        <Label
+                            FontSize="10"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Date, StringFormat='{0:dd}'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </VerticalStackLayout>
 </ContentPage>
