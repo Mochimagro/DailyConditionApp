@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace DailyConditionApp.Views;
 
-public partial class DailyInputView : ContentPage
+public partial class DailyInputView : BaseContentPage
 {
 	public DailyInputView(DailyInputViewModel viewModel)
 	{

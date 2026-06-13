@@ -2,7 +2,7 @@ using DailyConditionApp.ViewModels;
 
 namespace DailyConditionApp.Views;
 
-public partial class PostedDailyView : ContentPage
+public partial class PostedDailyView : BaseContentPage
 {
 	public PostedDailyView(PostedDailyViewModel viewModel)
 	{

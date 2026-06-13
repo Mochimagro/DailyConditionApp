@@ -24,7 +24,7 @@
 		<ApplicationTitle>環境コンディション確認</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.dailyconditionapp</ApplicationId>
+		<ApplicationId>com.mochimagro.dailyconditionapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

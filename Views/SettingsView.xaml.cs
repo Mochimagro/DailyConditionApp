@@ -3,7 +3,7 @@ using Microsoft.Maui.Controls;
 
 namespace DailyConditionApp.Views;
 
-public partial class SettingsView : ContentPage
+public partial class SettingsView : BaseContentPage
 {
 	public SettingsView(SettingsViewModel viewModel)
 	{

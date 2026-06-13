@@ -37,6 +37,9 @@ public static class MauiProgram
 
         builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
+        // Navigation service to centralize back handling and navigation
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
+
 #if ANDROID
         DependencyService.Register<INotificationService, DailyConditionApp.Platforms.Android.AndroidNotificationService>();
 #endif

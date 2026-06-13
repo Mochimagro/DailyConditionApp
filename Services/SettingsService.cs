@@ -71,6 +71,7 @@ namespace DailyConditionApp.Services
         }
 
         private const string PrefKey_RewardDays = "RewardDays";
+        private const string PrefKey_RewardText = "RewardText";
 
         public Task SaveRewardDaysAsync(IEnumerable<int> days)
         {
@@ -102,6 +103,36 @@ namespace DailyConditionApp.Services
                 return Task.FromResult(new List<int>());
             }
         
+        }
+
+        public Task SaveRewardTextAsync(string text)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(text))
+                    Preferences.Default.Remove(PrefKey_RewardText);
+                else
+                    Preferences.Default.Set(PrefKey_RewardText, text);
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task<string> LoadRewardTextAsync()
+        {
+            try
+            {
+                var text = Preferences.Default.Get(PrefKey_RewardText, string.Empty);
+                return Task.FromResult(text ?? string.Empty);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(string.Empty);
+            }
         }
     }
 }

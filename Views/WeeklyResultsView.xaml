@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BaseContentPage
     x:Class="DailyConditionApp.Views.WeeklyResultsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:DailyConditionApp.Converters"
     xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+    xmlns:views="clr-namespace:DailyConditionApp.Views"
     Title="週間睡眠スコア">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -43,9 +44,12 @@
 
 
         <!--  Microcharts を使った棒グラフ表示  -->
-        <Grid Padding="8">
-            <micro:ChartView Chart="{Binding WeeklyChart}" HeightRequest="240" />
+        <Grid Padding="8" BackgroundColor="Transparent">
+            <micro:ChartView
+                BackgroundColor="Transparent"
+                Chart="{Binding WeeklyChart}"
+                HeightRequest="240" />
         </Grid>
 
     </VerticalStackLayout>
-</ContentPage>
+</views:BaseContentPage>

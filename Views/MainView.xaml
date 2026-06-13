@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BaseContentPage
     x:Class="DailyConditionApp.Views.MainView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -18,27 +18,27 @@
             <Label
                 FontSize="18"
                 HorizontalOptions="Center"
-                TextColor="White"
+                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}"
                 Text="{Binding BindingContext.AverageSleepScoreText, Source={x:Reference ResultView}}"
-                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}" />
+                TextColor="White" />
 
             <ProgressBar
-                HeightRequest="16"
-                Progress="{Binding BindingContext.AverageSleepScoreProgress, Source={x:Reference ResultView}}"
-                ProgressColor="{Binding BindingContext.AverageSleepScoreColor, Source={x:Reference ResultView}}"
                 BackgroundColor="#333333"
-                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}" />
+                HeightRequest="16"
+                IsVisible="{Binding BindingContext.HasTodayData, Source={x:Reference ResultView}}"
+                Progress="{Binding BindingContext.AverageSleepScoreProgress, Source={x:Reference ResultView}}"
+                ProgressColor="{Binding BindingContext.AverageSleepScoreColor, Source={x:Reference ResultView}}" />
 
             <Label
                 FontSize="16"
                 HorizontalOptions="Center"
-                TextColor="#FFD54F"
-                Text="ご褒美可能！！"
-                IsVisible="{Binding BindingContext.IsRewardAvailable, Source={x:Reference ResultView}}" />
+                IsVisible="{Binding BindingContext.IsRewardAvailable, Source={x:Reference ResultView}}"
+                Text="{Binding BindingContext.RewardText, Source={x:Reference ResultView}}"
+                TextColor="#FFD54F" />
         </VerticalStackLayout>
 
         <Button Command="{Binding GoToDailyInputCommand}" Text="今日のコンディションを入力する" />
 
 
     </VerticalStackLayout>
-</ContentPage>
+</views:BaseContentPage>

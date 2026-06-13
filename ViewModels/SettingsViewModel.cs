@@ -24,6 +24,7 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty] private bool _thursdayChecked;
         [ObservableProperty] private bool _fridayChecked;
         [ObservableProperty] private bool _saturdayChecked;
+        [ObservableProperty] private string _rewardText = string.Empty;
 
         private readonly ISettingsService _settingsService;
         private readonly IDialogService _dialogService;
@@ -55,6 +56,9 @@ namespace DailyConditionApp.ViewModels
             ThursdayChecked = rewardDays.Contains((int)System.DayOfWeek.Thursday);
             FridayChecked = rewardDays.Contains((int)System.DayOfWeek.Friday);
             SaturdayChecked = rewardDays.Contains((int)System.DayOfWeek.Saturday);
+            // ご褒美テキストの読み込み
+            var rtext = await _settingsService.LoadRewardTextAsync();
+            RewardText = rtext ?? string.Empty;
             IsBusy = false;
         }
 
@@ -75,6 +79,8 @@ namespace DailyConditionApp.ViewModels
             if (FridayChecked) days.Add((int)System.DayOfWeek.Friday);
             if (SaturdayChecked) days.Add((int)System.DayOfWeek.Saturday);
             await _settingsService.SaveRewardDaysAsync(days);
+            // ご褒美テキストの保存
+            await _settingsService.SaveRewardTextAsync(RewardText);
 
             await _dialogService.ShowToastAsync("保存しました");
             IsBusy = false;

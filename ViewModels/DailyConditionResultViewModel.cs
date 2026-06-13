@@ -19,6 +19,7 @@ namespace DailyConditionApp.ViewModels
         [ObservableProperty] private string _environmentScoreText = "--";
         [ObservableProperty] private string _conditionCommentText = "読み込み中...";
         [ObservableProperty] private bool _isRewardAvailable;
+        [ObservableProperty] private string _rewardText = "ご褒美可能！！";
 
         // 表示用（0〜100 の整数値）
         [ObservableProperty] private int _sleepScore;
@@ -84,6 +85,17 @@ namespace DailyConditionApp.ViewModels
 
             try
             {
+                // ご褒美テキストを読み込む
+                try
+                {
+                    var rtext = await _settingsService.LoadRewardTextAsync();
+                    RewardText = string.IsNullOrWhiteSpace(rtext) ? "ご褒美可能！！" : rtext;
+                }
+                catch
+                {
+                    RewardText = "ご褒美可能！！";
+                }
+
                 var notionSettings = await _settingsService.LoadNotionKeyAsync();
                 string today = DateTime.Now.ToString("yyyy-MM-dd");
 
@@ -112,15 +124,6 @@ namespace DailyConditionApp.ViewModels
                         AverageSleepScoreText = "";
                     }
 
-                    // ご褒美判定（UI 表示用フラグの更新）
-                    try
-                    {
-                        await CheckRewardAndNotifyAsync(notionSettings.token, notionSettings.databaseId);
-                    }
-                    catch
-                    {
-                        // ignore
-                    }
                 }
                 else
                 {
@@ -170,28 +173,7 @@ namespace DailyConditionApp.ViewModels
 
                 AverageSleepScoreValue = avg;
                 AverageSleepScoreText = $"過去3日間の平均睡眠スコア: {avg} 点";
-            }
-            catch
-            {
-                AverageSleepScoreText = "";
-                AverageSleepScoreValue = 0;
-            }
-        }
 
-        private async Task CheckRewardAndNotifyAsync(string token, string databaseId)
-        {
-            try
-            {
-                var list = await _notionService.GetWeeklySleepScoresAsync(token, databaseId);
-
-                var scores = list.Select(x => x.Score).Where(s => s.HasValue).Select(s => s.Value).ToList();
-                if (scores.Count == 0)
-                {
-                    IsRewardAvailable = false;
-                    return;
-                }
-
-                var avg = (int)Math.Round(scores.Average());
                 var rewardDays = await _settingsService.LoadRewardDaysAsync();
                 var todayInt = (int)DateTime.Now.DayOfWeek;
 
@@ -208,6 +190,8 @@ namespace DailyConditionApp.ViewModels
             }
             catch
             {
+                AverageSleepScoreText = "";
+                AverageSleepScoreValue = 0;
                 IsRewardAvailable = false;
             }
         }

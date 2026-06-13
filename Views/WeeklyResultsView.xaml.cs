@@ -1,7 +1,7 @@
 using DailyConditionApp.ViewModels;
 
 namespace DailyConditionApp.Views;
-public partial class WeeklyResultsView : ContentPage
+public partial class WeeklyResultsView : BaseContentPage
 {
     public WeeklyResultsView(WeeklyResultsViewModel viewModel)
     {

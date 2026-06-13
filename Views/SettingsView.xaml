@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BaseContentPage
     x:Class="DailyConditionApp.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:DailyConditionApp.Views">
     <VerticalStackLayout Padding="12" Spacing="8">
 
         <!--  Norion API 設定  -->
@@ -37,14 +38,17 @@
             Keyboard="Numeric"
             Placeholder="経度 (Longitude)"
             Text="{Binding Longitude}" />
-        <!-- ご褒美曜日 -->
+        <!--  ご褒美曜日  -->
         <Label
             Margin="0,14,0,0"
             FontAttributes="Bold"
             Text="ご褒美曜日" />
 
-        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto" ColumnSpacing="8">
-            <VerticalStackLayout Grid.Column="0"  Spacing="4">
+        <Grid
+            ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            ColumnSpacing="8"
+            RowDefinitions="Auto">
+            <VerticalStackLayout Grid.Column="0" Spacing="4">
                 <CheckBox IsChecked="{Binding SundayChecked}" />
                 <Label Text="日" VerticalOptions="Center" />
             </VerticalStackLayout>
@@ -74,6 +78,13 @@
             </VerticalStackLayout>
         </Grid>
 
+        <!-- ご褒美テキスト -->
+        <Label
+            Margin="0,12,0,0"
+            FontAttributes="Bold"
+            Text="ご褒美表示テキスト" />
+        <Entry Placeholder="例: ご褒美可能！！" Text="{Binding RewardText, Mode=TwoWay}" />
+
         <!--  保存ボタン  -->
         <HorizontalStackLayout HorizontalOptions="End">
             <Button
@@ -84,4 +95,4 @@
         </HorizontalStackLayout>
 
     </VerticalStackLayout>
-</ContentPage>
+</views:BaseContentPage>

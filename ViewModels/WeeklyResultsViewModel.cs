@@ -102,10 +102,8 @@ namespace DailyConditionApp.ViewModels
                             MaxValue = 100,
                             MinValue = 0,
                             LabelTextSize = 18,
-                            // 背景を少し暗めにして棒とのコントラストを上げる
-                            BackgroundColor = SKColor.Parse("#EFEFEF"),
                             Threshold = 80f,
-                            // ThresholdColor = SKColors.White
+                            ThresholdColor = SKColors.White
                         };
                     }
                     catch (Exception ex)

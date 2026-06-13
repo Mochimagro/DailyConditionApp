@@ -4,7 +4,7 @@ using Microsoft.Maui.ApplicationModel;
 
 namespace DailyConditionApp.Views
 {
-    public partial class MainView : ContentPage
+    public partial class MainView : BaseContentPage
     {
         public MainView(ViewModels.MainViewModel viewModel,DailyConditionResultViewModel resultViewModel)
         {
