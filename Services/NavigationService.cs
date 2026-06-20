@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using DailyConditionApp.Views;
 
 namespace DailyConditionApp.Services
 {
@@ -34,16 +35,33 @@ namespace DailyConditionApp.Services
                 }
             }
 
-            // No handler handled the back action - try default navigation
-            var nav = Shell.Current?.Navigation;
-            if (nav != null && nav.NavigationStack.Count > 1)
+            // No handler handled the back action - decide default behavior:
+            // - If current page is MainView -> return false to allow OS to exit app
+            // - Otherwise -> navigate to MainView (root) and suppress OS exit
+            var shell = Shell.Current;
+            if (shell == null)
             {
-                await nav.PopAsync();
-                return true;
+                return false;
             }
 
-            // Nothing to pop - return false to allow OS to exit app
-            return false;
+            var current = shell.CurrentPage;
+            if (current is MainView)
+            {
+                // On MainView, let the OS handle the back (exit app)
+                return false;
+            }
+
+            // For any other page, navigate back to MainView as a root
+            try
+            {
+                await shell.GoToAsync("//MainView", true);
+                return true; // handled -> suppress OS default
+            }
+            catch
+            {
+                // If navigation failed, fall back to letting OS handle it
+                return false;
+            }
         }
 
         public Task GoBackAsync()

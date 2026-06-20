@@ -122,6 +122,8 @@ namespace DailyConditionApp.ViewModels
                                                           // 1 km/h = 1000m / 3600s ≒ 1 / 3.6
                 double windMs = condition.WindSpeed / 3.6;
                 WindSpeed = windMs.ToString("F1");
+
+                await _dialogService.ShowToastAsync("天気情報を読み込みました");
             }
             else
             {

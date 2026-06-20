@@ -49,13 +49,13 @@ namespace DailyConditionApp.Services
                 var forecastDay = root.GetProperty("forecast").GetProperty("forecastday")[0];
                 var hours = forecastDay.GetProperty("hour").EnumerateArray();
 
-                // 1. 9:00から18:00のデータを抽出
+                // 1. 9:00から18:00の3時間毎のデータを抽出
                 var targetHours = hours.Where(h =>
                 {
                     var timeStr = h.GetProperty("time").GetString();
                     if (DateTime.TryParse(timeStr, out var time))
                     {
-                        return time.Hour >= 9 && time.Hour <= 18;
+                        return time.Hour >= 9 && time.Hour <= 18 && time.Hour % 3 == 0;
                     }
                     return false;
                 }).ToList();

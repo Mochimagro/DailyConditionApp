@@ -78,7 +78,7 @@
             </VerticalStackLayout>
         </Grid>
 
-        <!-- ご褒美テキスト -->
+        <!--  ご褒美テキスト  -->
         <Label
             Margin="0,12,0,0"
             FontAttributes="Bold"
