@@ -4,95 +4,24 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:DailyConditionApp.Views">
-    <VerticalStackLayout Padding="12" Spacing="8">
 
-        <!--  Norion API 設定  -->
-        <Label
-            FontAttributes="Bold"
-            HorizontalOptions="Start"
-            Text="設定" />
-        <Label Text="NotionToken" />
-        <Entry Placeholder="NotionTokenを入力" Text="{Binding NotionToken, Mode=TwoWay}" />
+    <VerticalStackLayout Padding="16" Spacing="20">
+        <Label Text="設定" FontAttributes="Bold" FontSize="20" />
 
-        <Label Text="DatabaseID" />
-        <Entry Placeholder="DatabaseIDを入力" Text="{Binding DatabaseId, Mode=TwoWay}" />
-        <Label
-            FontSize="12"
-            Text="※このNotion情報デバイスに保存されます。"
-            TextColor="Gray" />
+        <Frame CornerRadius="8" Padding="12">
+            <VerticalStackLayout>
+                <Label Text="API設定" FontAttributes="Bold" />
+                <Button Text="API設定へ" Command="{Binding GoToApiSettingsCommand}" />
+            </VerticalStackLayout>
+        </Frame>
 
-        <!--  Weather API 設定  -->
-        <Label
-            Margin="0,20,0,0"
-            FontAttributes="Bold"
-            FontSize="18"
-            Text="Weather API 設定" />
-
-        <!--  登録地域情報  -->
-        <Entry Placeholder="Weather API Key" Text="{Binding WeatherApiKey}" />
-        <Entry
-            Keyboard="Numeric"
-            Placeholder="緯度 (Latitude)"
-            Text="{Binding Latitude}" />
-        <Entry
-            Keyboard="Numeric"
-            Placeholder="経度 (Longitude)"
-            Text="{Binding Longitude}" />
-        <!--  ご褒美曜日  -->
-        <Label
-            Margin="0,14,0,0"
-            FontAttributes="Bold"
-            Text="ご褒美曜日" />
-
-        <Grid
-            ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-            ColumnSpacing="8"
-            RowDefinitions="Auto">
-            <VerticalStackLayout Grid.Column="0" Spacing="4">
-                <CheckBox IsChecked="{Binding SundayChecked}" />
-                <Label Text="日" VerticalOptions="Center" />
+        <Frame CornerRadius="8" Padding="12">
+            <VerticalStackLayout>
+                <Label Text="ご褒美設定" FontAttributes="Bold" />
+                <Button Text="ご褒美設定へ" Command="{Binding GoToRewardSettingsCommand}" />
             </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="1" Spacing="4">
-                <CheckBox IsChecked="{Binding MondayChecked}" />
-                <Label Text="月" VerticalOptions="Center" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="2" Spacing="4">
-                <CheckBox IsChecked="{Binding TuesdayChecked}" />
-                <Label Text="火" VerticalOptions="Center" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="3" Spacing="4">
-                <CheckBox IsChecked="{Binding WednesdayChecked}" />
-                <Label Text="水" VerticalOptions="Center" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="4" Spacing="4">
-                <CheckBox IsChecked="{Binding ThursdayChecked}" />
-                <Label Text="木" VerticalOptions="Center" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="5" Spacing="4">
-                <CheckBox IsChecked="{Binding FridayChecked}" />
-                <Label Text="金" VerticalOptions="Center" />
-            </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="6" Spacing="4">
-                <CheckBox IsChecked="{Binding SaturdayChecked}" />
-                <Label Text="土" VerticalOptions="Center" />
-            </VerticalStackLayout>
-        </Grid>
-
-        <!--  ご褒美テキスト  -->
-        <Label
-            Margin="0,12,0,0"
-            FontAttributes="Bold"
-            Text="ご褒美表示テキスト" />
-        <Entry Placeholder="例: ご褒美可能！！" Text="{Binding RewardText, Mode=TwoWay}" />
-
-        <!--  保存ボタン  -->
-        <HorizontalStackLayout HorizontalOptions="End">
-            <Button
-                AutomationId="SaveButton"
-                Command="{Binding SaveSettingsCommand}"
-                HorizontalOptions="End"
-                Text="保存" />
-        </HorizontalStackLayout>
+        </Frame>
 
     </VerticalStackLayout>
+
 </views:BaseContentPage>

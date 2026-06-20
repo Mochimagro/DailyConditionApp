@@ -59,6 +59,12 @@ public static class MauiProgram
         builder.Services.AddTransient<SettingsView>();
         builder.Services.AddTransient<SettingsViewModel>();
 
+        // Settings sub-pages
+        builder.Services.AddTransient<ApiSettingsView>();
+        builder.Services.AddTransient<ApiSettingsViewModel>();
+        builder.Services.AddTransient<RewardSettingsView>();
+        builder.Services.AddTransient<RewardSettingsViewModel>();
+
         builder.Services.AddTransient<WeeklyResultsView>();
         builder.Services.AddTransient<WeeklyResultsViewModel>();
 
