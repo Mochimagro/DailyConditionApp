@@ -69,6 +69,7 @@ namespace DailyConditionApp.ViewModels
             "曇り",
             "雨",
             "雪",
+            "猛暑",
             "台風"
         };
 

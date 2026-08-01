@@ -100,6 +100,32 @@ namespace DailyConditionApp.Services
                 int cloud = current.GetProperty("cloud").GetInt32();
                 double precip = current.GetProperty("precip_mm").GetDouble();
 
+                // 当日の最高気温 (forecast.day.maxtemp_c)
+                double maxTemp = 0;
+                if (forecastDay.TryGetProperty("day", out var dayElem) && dayElem.TryGetProperty("maxtemp_c", out var maxtempElem))
+                {
+                    maxTemp = maxtempElem.GetDouble();
+                }
+
+                // 当日のcloud（日中 7:00〜18:00 の hour 配列を対象に平均を計算）
+                int dayCloud = 0;
+                var dayHours = hours.Where(h =>
+                {
+                    var timeStr = h.GetProperty("time").GetString();
+                    if (DateTime.TryParse(timeStr, out var time))
+                    {
+                        return time.Hour >= 7 && time.Hour <= 18;
+                    }
+                    return false;
+                }).ToList();
+
+                if (dayHours.Count > 0)
+                {
+                    var a = dayHours.Select(h => h.GetProperty("cloud").GetInt32());
+
+                    dayCloud = (int)Math.Round(dayHours.Average(h => h.GetProperty("cloud").GetInt32()));
+                }
+
                 return new WeatherCondition
                 {
                     Description = current.GetProperty("condition").GetProperty("text").GetString() ?? "",
@@ -107,7 +133,7 @@ namespace DailyConditionApp.Services
                     AvgPressureDiff = maxDiff, // ★算出値
                     WindSpeed = Math.Round((current.GetProperty("wind_kph").GetDouble() / 3.6) * 10) / 10,
                     // WindSpeed = current.GetProperty("wind_kph").GetDouble(),
-                    CustomStatus = InterpretWeatherCondition(code, cloud, precip)
+                    CustomStatus = InterpretWeatherCondition(code, dayCloud, precip, maxTemp)
                 };
             }
             catch (Exception)
@@ -117,7 +143,7 @@ namespace DailyConditionApp.Services
         }
 
         // GASコードをC#へ移植
-        private string InterpretWeatherCondition(int code, int cloud, double precip)
+        private string InterpretWeatherCondition(int code, int dayCloud, double precip, double maxTemp)
         {
             // 1. 【最優先】台風 (雷系)
             int[] stormCodes = { 1087, 1273, 1276, 1279, 1282 };
@@ -127,11 +153,14 @@ namespace DailyConditionApp.Services
             int[] snowCodes = { 1066, 1114, 1117, 1210, 1213, 1216, 1219, 1222, 1225, 1255, 1258 };
             if (snowCodes.Contains(code)) return "雪";
 
+            // 2.5 【猛暑判定】その日の最高気温が33度以上かつ当日のcloudが70以下
+            if (maxTemp >= 33 && dayCloud <= 70) return "猛暑";
+
             // 3. 降水量 10mm 以上は「雨」
             if (precip >= 10) return "雨";
 
             // 4. 雲の量 50% 未満は「晴れ」
-            if (cloud < 50) return "晴れ";
+            if (dayCloud < 70) return "晴れ";
 
             // 5. それ以外は「曇り」
             return "曇り";
